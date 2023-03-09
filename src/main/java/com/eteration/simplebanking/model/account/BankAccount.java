@@ -1,4 +1,4 @@
-package com.eteration.simplebanking.model;
+package com.eteration.simplebanking.model.account;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,5 @@
-package com.eteration.simplebanking.model.bankaccount;
+package com.eteration.simplebanking.model.account;
 
-import com.eteration.simplebanking.model.BankAccount;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

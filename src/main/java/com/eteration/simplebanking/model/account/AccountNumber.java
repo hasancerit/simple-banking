@@ -1,4 +1,4 @@
-package com.eteration.simplebanking.model;
+package com.eteration.simplebanking.model.account;
 
 import com.eteration.simplebanking.util.RegexUtil;
 

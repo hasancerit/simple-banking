@@ -1,4 +1,6 @@
-package com.eteration.simplebanking.model;
+package com.eteration.simplebanking.model.account;
+
+import com.eteration.simplebanking.model.InsufficientBalanceException;
 
 //TODO: Is it must be value object?
 public record Balance(Double amount) {
