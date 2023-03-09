@@ -16,6 +16,9 @@ public record Balance(Double amount) {
     }
 
     public Balance subtract(Double subtraction) {
+        if(subtraction > amount) {
+            throw new InsufficientBalanceException();
+        }
         return new Balance(this.amount - subtraction);
     }
 }

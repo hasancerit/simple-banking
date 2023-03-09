@@ -2,11 +2,13 @@ package com.eteration.simplebanking.model.bankaccount;
 
 import com.eteration.simplebanking.model.Balance;
 import com.eteration.simplebanking.model.BankAccount;
+import com.eteration.simplebanking.model.InsufficientBalanceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BankAccountDebitTest {
     private BankAccount bankAccount;
@@ -52,5 +54,10 @@ public class BankAccountDebitTest {
 
         bankAccount.debit(30.02);
         assertEquals(bankAccount.getBalance(), Balance.of(39.88));
+    }
+
+    @Test
+    public void givenAccountWithHundredBalance_whenDebitTwoHundred_thenThrowError() {
+        assertThrows(InsufficientBalanceException.class, () -> bankAccount.debit(200.0));
     }
 }
