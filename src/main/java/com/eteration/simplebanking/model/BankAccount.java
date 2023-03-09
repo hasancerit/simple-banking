@@ -1,4 +1,4 @@
-package com.eteration.simplebanking.model.bankaccount;
+package com.eteration.simplebanking.model;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,5 +10,9 @@ public class BankAccount {
 
     public void credit(Double debitAmount) {
         this.balance += debitAmount;
+    }
+
+    public void debit(Double debitAmount) {
+        this.balance -= debitAmount;
     }
 }

@@ -1,6 +1,6 @@
-package com.eteration.simplebanking.model;
+package com.eteration.simplebanking.model.bankaccount;
 
-import com.eteration.simplebanking.model.bankaccount.BankAccount;
+import com.eteration.simplebanking.model.BankAccount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
