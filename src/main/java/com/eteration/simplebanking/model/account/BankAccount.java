@@ -1,5 +1,6 @@
 package com.eteration.simplebanking.model.account;
 
+import com.eteration.simplebanking.model.Amount;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -7,7 +8,7 @@ import lombok.NonNull;
 @Builder
 @Getter
 public class BankAccount {
-    @NonNull private Balance balance;
+    @NonNull private Amount balance;
     @NonNull private AccountNumber accountNumber;
 
     public void deposit(Double depositAmount) {
