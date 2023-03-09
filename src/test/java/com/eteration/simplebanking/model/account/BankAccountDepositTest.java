@@ -21,24 +21,24 @@ public class BankAccountDepositTest {
     @Test
     public void givenEmptyAccount_whenDeposit_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        bankAccount.deposit(100.0);
+        bankAccount.deposit(Amount.of(100.0));
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
     }
 
     @Test
     public void givenEmptyAccount_whenDepositTwice_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        bankAccount.deposit(100.0);
+        bankAccount.deposit(Amount.of(100.0));
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
 
-        bankAccount.deposit(53.0);
+        bankAccount.deposit(Amount.of(53.0));
         assertEquals(bankAccount.getBalance(), Amount.of(153.0));
     }
 
     @Test
     public void givenEmptyAccount_whenDepositFloatingPoint_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        bankAccount.deposit(64.45);
+        bankAccount.deposit(Amount.of(64.45));
         assertEquals(bankAccount.getBalance(), Amount.of(64.45));
     }
 
@@ -46,10 +46,10 @@ public class BankAccountDepositTest {
     @Test
     public void givenEmptyAccount_whenDepositFloatingPointTwice_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        bankAccount.deposit(30.10);
+        bankAccount.deposit(Amount.of(30.10));
         assertEquals(bankAccount.getBalance(), Amount.of(30.10));
 
-        bankAccount.deposit(30.02);
+        bankAccount.deposit(Amount.of(30.02));
         assertEquals(bankAccount.getBalance(), Amount.of(60.03));
     }
 }

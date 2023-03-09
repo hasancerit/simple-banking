@@ -11,14 +11,14 @@ public record Amount(Double amount) {
         return new Amount(amount);
     }
 
-    public Amount add(Double addition) {
-        return new Amount(this.amount + addition);
+    public Amount add(Amount addition) {
+        return new Amount(this.amount + addition.amount);
     }
 
-    public Amount subtract(Double subtraction) {
-        if(subtraction > amount) {
+    public Amount subtract(Amount subtraction) {
+        if(subtraction.amount > this.amount) {
             throw new InsufficientBalanceException();
         }
-        return new Amount(this.amount - subtraction);
+        return new Amount(this.amount - subtraction.amount);
     }
 }

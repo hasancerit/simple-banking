@@ -21,10 +21,10 @@ public class BankAccountDepositAndWithdrawTest {
     @Test
     public void givenEmptyAccount_whenDepositAndWithdraw_thenCalculateTheFinalAmount() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        bankAccount.deposit(55.0);
+        bankAccount.deposit(Amount.of(55.0));
         assertEquals(bankAccount.getBalance(), Amount.of(55.0));
 
-        bankAccount.withdraw(30.0);
+        bankAccount.withdraw(Amount.of(30.0));
         assertEquals(bankAccount.getBalance(), Amount.of(25.0));
     }
 
@@ -32,10 +32,10 @@ public class BankAccountDepositAndWithdrawTest {
     @Test
     public void givenEmptyAccount_whenDepositAndWithdrawFloatingPoint_thenCalculateTheFinalAmount() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        bankAccount.deposit(40.20);
+        bankAccount.deposit(Amount.of(40.20));
         assertEquals(bankAccount.getBalance(), Amount.of(40.20));
 
-        bankAccount.withdraw(10.02);
+        bankAccount.withdraw(Amount.of(10.02));
         assertEquals(bankAccount.getBalance(), Amount.of(30.18));
     }
 }

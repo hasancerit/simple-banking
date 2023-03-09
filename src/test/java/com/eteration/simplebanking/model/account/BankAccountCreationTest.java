@@ -11,4 +11,11 @@ public class BankAccountCreationTest {
                 .balance(null)
                 .build());
     }
+
+    @Test
+    public void givenNullAccountNumber_whenCreatingAccount_thenThrowNullPointerError() {
+        assertThrows(NullPointerException.class, () -> BankAccount.builder()
+                .accountNumber(null)
+                .build());
+    }
 }

@@ -23,24 +23,24 @@ public class BankAccountWithdrawTest {
     @Test
     public void givenAccountWithHundredBalance_whenWithdraw_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
-        bankAccount.withdraw(100.0);
+        bankAccount.withdraw(Amount.of(100.0));
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
     }
 
     @Test
     public void givenAccountWithHundredBalance_whenWithdrawTwice_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
-        bankAccount.withdraw(50.0);
+        bankAccount.withdraw(Amount.of(50.0));
         assertEquals(bankAccount.getBalance(), Amount.of(50.0));
 
-        bankAccount.withdraw(20.0);
+        bankAccount.withdraw(Amount.of(20.0));
         assertEquals(bankAccount.getBalance(), Amount.of(30.0));
     }
 
     @Test
     public void givenAccountWithHundredBalance_whenWithdrawFloatingPoint_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
-        bankAccount.withdraw(30.50);
+        bankAccount.withdraw(Amount.of(30.50));
         assertEquals(bankAccount.getBalance(), Amount.of(69.5));
         assertEquals(bankAccount.getBalance(), Amount.of(69.50));
     }
@@ -49,15 +49,15 @@ public class BankAccountWithdrawTest {
     @Test
     public void givenAccountWithHundredBalance_whenWithdrawFloatingPointTwice_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
-        bankAccount.withdraw(30.10);
+        bankAccount.withdraw(Amount.of(30.10));
         assertEquals(bankAccount.getBalance(), Amount.of(69.9));
 
-        bankAccount.withdraw(30.02);
+        bankAccount.withdraw(Amount.of(30.02));
         assertEquals(bankAccount.getBalance(), Amount.of(39.88));
     }
 
     @Test
     public void givenAccountWithHundredBalance_whenWithdrawTwoHundred_thenThrowError() {
-        assertThrows(InsufficientBalanceException.class, () -> bankAccount.withdraw(200.0));
+        assertThrows(InsufficientBalanceException.class, () -> bankAccount.withdraw(Amount.of(200.0)));
     }
 }
