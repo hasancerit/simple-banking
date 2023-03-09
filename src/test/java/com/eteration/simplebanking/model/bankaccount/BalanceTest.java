@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BalanceTest {
     @Test
-    public void givenNegativeAmount_whenCreatingBalance_thenThrowNullPointerError() {
+    public void givenNegativeAmount_whenCreatingBalance_thenThrowException() {
         assertThrows(Exception.class, () -> Balance.of(-100.0));
     }
 
