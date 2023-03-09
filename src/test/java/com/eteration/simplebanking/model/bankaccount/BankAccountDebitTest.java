@@ -1,5 +1,6 @@
 package com.eteration.simplebanking.model.bankaccount;
 
+import com.eteration.simplebanking.model.AccountNumber;
 import com.eteration.simplebanking.model.Balance;
 import com.eteration.simplebanking.model.BankAccount;
 import com.eteration.simplebanking.model.InsufficientBalanceException;
@@ -17,6 +18,7 @@ public class BankAccountDebitTest {
     public void createAccountWithHundredBalance() {
         bankAccount = BankAccount.builder()
                 .balance(Balance.of(100.0))
+                .accountNumber(AccountNumber.of("111-2222"))
                 .build();
     }
 

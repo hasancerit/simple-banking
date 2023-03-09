@@ -1,5 +1,6 @@
 package com.eteration.simplebanking.model.bankaccount;
 
+import com.eteration.simplebanking.model.AccountNumber;
 import com.eteration.simplebanking.model.Balance;
 import com.eteration.simplebanking.model.BankAccount;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ public class BankAccountCreditTest {
     public void createEmptyAccount() {
         bankAccount = BankAccount.builder()
                 .balance(Balance.ZERO)
+                .accountNumber(AccountNumber.of("111-2222"))
                 .build();
     }
 
