@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class BankAccountDebitTest {
+public class BankAccountWithdrawTest {
     private BankAccount bankAccount;
 
     @BeforeEach
@@ -23,43 +23,43 @@ public class BankAccountDebitTest {
     }
 
     @Test
-    public void givenAccountWithHundredBalance_whenDebit_thenSubtractBalance() {
+    public void givenAccountWithHundredBalance_whenWithdraw_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
-        bankAccount.debit(100.0);
+        bankAccount.withdraw(100.0);
         assertEquals(bankAccount.getBalance(), Balance.ZERO);
     }
 
     @Test
-    public void givenAccountWithHundredBalance_whenDebitTwice_thenSubtractBalance() {
+    public void givenAccountWithHundredBalance_whenWithdrawTwice_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
-        bankAccount.debit(50.0);
+        bankAccount.withdraw(50.0);
         assertEquals(bankAccount.getBalance(), Balance.of(50.0));
 
-        bankAccount.debit(20.0);
+        bankAccount.withdraw(20.0);
         assertEquals(bankAccount.getBalance(), Balance.of(30.0));
     }
 
     @Test
-    public void givenAccountWithHundredBalance_whenDebitFloatingPoint_thenSubtractBalance() {
+    public void givenAccountWithHundredBalance_whenWithdrawFloatingPoint_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
-        bankAccount.debit(30.50);
+        bankAccount.withdraw(30.50);
         assertEquals(bankAccount.getBalance(), Balance.of(69.5));
         assertEquals(bankAccount.getBalance(), Balance.of(69.50));
     }
 
     @Disabled("To fix this problem, bigdecimal should be used. I disable the test because it is requested in this way.")
     @Test
-    public void givenAccountWithHundredBalance_whenDebitFloatingPointTwice_thenSubtractBalance() {
+    public void givenAccountWithHundredBalance_whenWithdrawFloatingPointTwice_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
-        bankAccount.debit(30.10);
+        bankAccount.withdraw(30.10);
         assertEquals(bankAccount.getBalance(), Balance.of(69.9));
 
-        bankAccount.debit(30.02);
+        bankAccount.withdraw(30.02);
         assertEquals(bankAccount.getBalance(), Balance.of(39.88));
     }
 
     @Test
-    public void givenAccountWithHundredBalance_whenDebitTwoHundred_thenThrowError() {
-        assertThrows(InsufficientBalanceException.class, () -> bankAccount.debit(200.0));
+    public void givenAccountWithHundredBalance_whenWithdrawTwoHundred_thenThrowError() {
+        assertThrows(InsufficientBalanceException.class, () -> bankAccount.withdraw(200.0));
     }
 }

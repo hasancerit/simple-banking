@@ -11,5 +11,5 @@ public class BalanceTest {
         assertThrows(Exception.class, () -> Balance.of(-100.0));
     }
 
-    //TODO: I covered Balance.add and Balance.subtract cases in BankAccountCreditTest andBankAccountDebitTest. But must be added here.
+    //TODO: I covered Balance.add and Balance.subtract cases in BankAccountDepositTest and BankAccountWithdrawTest. But must be added here.
 }

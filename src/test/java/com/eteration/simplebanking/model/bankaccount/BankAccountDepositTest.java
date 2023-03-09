@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BankAccountCreditTest {
+public class BankAccountDepositTest {
     private BankAccount bankAccount;
 
     @BeforeEach
@@ -21,37 +21,37 @@ public class BankAccountCreditTest {
     }
 
     @Test
-    public void givenEmptyAccount_whenCredit_thenIncreaseBalance() {
+    public void givenEmptyAccount_whenDeposit_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Balance.ZERO);
-        bankAccount.credit(100.0);
+        bankAccount.deposit(100.0);
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
     }
 
     @Test
-    public void givenEmptyAccount_whenCreditTwice_thenIncreaseBalance() {
+    public void givenEmptyAccount_whenDepositTwice_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Balance.ZERO);
-        bankAccount.credit(100.0);
+        bankAccount.deposit(100.0);
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
 
-        bankAccount.credit(53.0);
+        bankAccount.deposit(53.0);
         assertEquals(bankAccount.getBalance(), Balance.of(153.0));
     }
 
     @Test
-    public void givenEmptyAccount_whenCreditFloatingPoint_thenIncreaseBalance() {
+    public void givenEmptyAccount_whenDepositFloatingPoint_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Balance.ZERO);
-        bankAccount.credit(64.45);
+        bankAccount.deposit(64.45);
         assertEquals(bankAccount.getBalance(), Balance.of(64.45));
     }
 
     @Disabled("To fix this problem, bigdecimal should be used. I disable the test because it is requested in this way.")
     @Test
-    public void givenEmptyAccount_whenCreditFloatingPointTwice_thenIncreaseBalance() {
+    public void givenEmptyAccount_whenDepositFloatingPointTwice_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Balance.ZERO);
-        bankAccount.credit(30.10);
+        bankAccount.deposit(30.10);
         assertEquals(bankAccount.getBalance(), Balance.of(30.10));
 
-        bankAccount.credit(30.02);
+        bankAccount.deposit(30.02);
         assertEquals(bankAccount.getBalance(), Balance.of(60.03));
     }
 }

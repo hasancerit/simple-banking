@@ -10,11 +10,11 @@ public class BankAccount {
     @NonNull private Balance balance;
     @NonNull private AccountNumber accountNumber;
 
-    public void credit(Double creditAmount) {
-        this.balance = balance.add(creditAmount);
+    public void deposit(Double depositAmount) {
+        this.balance = balance.add(depositAmount);
     }
 
-    public void debit(Double debitAmount) {
-        this.balance = balance.subtract(debitAmount);
+    public void withdraw(Double withdrawAmount) {
+        this.balance = balance.subtract(withdrawAmount);
     }
 }
