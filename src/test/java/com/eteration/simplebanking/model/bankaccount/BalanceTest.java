@@ -10,4 +10,6 @@ public class BalanceTest {
     public void givenNegativeAmount_whenCreatingBalance_thenThrowNullPointerError() {
         assertThrows(Exception.class, () -> Balance.of(-100.0));
     }
+
+    //TODO: I covered Balance.add and Balance.subtract cases in BankAccountCreditTest andBankAccountDebitTest. But must be added here.
 }
