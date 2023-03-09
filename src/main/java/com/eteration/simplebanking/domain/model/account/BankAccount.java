@@ -1,6 +1,7 @@
-package com.eteration.simplebanking.model.account;
+package com.eteration.simplebanking.domain.model.account;
 
-import com.eteration.simplebanking.model.Amount;
+import com.eteration.simplebanking.domain.model.AccountNumber;
+import com.eteration.simplebanking.domain.model.Amount;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;

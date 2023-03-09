@@ -1,4 +1,4 @@
-package com.eteration.simplebanking.model;
+package com.eteration.simplebanking.domain.exception;
 
 public class InsufficientBalanceException extends RuntimeException{
 }

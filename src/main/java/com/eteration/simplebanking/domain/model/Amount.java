@@ -1,4 +1,6 @@
-package com.eteration.simplebanking.model;
+package com.eteration.simplebanking.domain.model;
+
+import com.eteration.simplebanking.domain.exception.InsufficientBalanceException;
 
 //TODO: Is it must be value object?
 public record Amount(Double amount) {

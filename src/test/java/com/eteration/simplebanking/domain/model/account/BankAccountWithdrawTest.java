@@ -1,7 +1,8 @@
-package com.eteration.simplebanking.model.account;
+package com.eteration.simplebanking.domain.model.account;
 
-import com.eteration.simplebanking.model.Amount;
-import com.eteration.simplebanking.model.InsufficientBalanceException;
+import com.eteration.simplebanking.domain.model.Amount;
+import com.eteration.simplebanking.domain.exception.InsufficientBalanceException;
+import com.eteration.simplebanking.domain.model.AccountNumber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

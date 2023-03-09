@@ -1,6 +1,7 @@
-package com.eteration.simplebanking.model.account;
+package com.eteration.simplebanking.domain.model.account.transaction;
 
-import com.eteration.simplebanking.model.Amount;
+import com.eteration.simplebanking.domain.model.Amount;
+import com.eteration.simplebanking.domain.model.account.Transaction;
 
 public class DepositTransaction extends Transaction {
     public DepositTransaction(Amount amount) {
