@@ -6,13 +6,13 @@ import lombok.Getter;
 @Builder
 @Getter
 public class BankAccount {
-    private Double balance;
+    private Balance balance;
 
-    public void credit(Double debitAmount) {
-        this.balance += debitAmount;
+    public void credit(Double creditAmount) {
+        this.balance = balance.add(creditAmount);
     }
 
     public void debit(Double debitAmount) {
-        this.balance -= debitAmount;
+        this.balance = balance.subtract(debitAmount);
     }
 }
