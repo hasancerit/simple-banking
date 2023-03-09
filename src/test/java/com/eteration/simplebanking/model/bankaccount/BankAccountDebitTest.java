@@ -19,14 +19,14 @@ public class BankAccountDebitTest {
     }
 
     @Test
-    public void givenEmptyAccount_whenDebit_thenIncreaseBalance() {
+    public void givenAccountWithHundredBalance_whenDebit_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
         bankAccount.debit(100.0);
         assertEquals(bankAccount.getBalance(), Balance.ZERO);
     }
 
     @Test
-    public void givenEmptyAccount_whenDebitTwice_thenIncreaseBalance() {
+    public void givenAccountWithHundredBalance_whenDebitTwice_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
         bankAccount.debit(50.0);
         assertEquals(bankAccount.getBalance(), Balance.of(50.0));
@@ -36,7 +36,7 @@ public class BankAccountDebitTest {
     }
 
     @Test
-    public void givenEmptyAccount_whenDebitFloatingPoint_thenIncreaseBalance() {
+    public void givenAccountWithHundredBalance_whenDebitFloatingPoint_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
         bankAccount.debit(30.50);
         assertEquals(bankAccount.getBalance(), Balance.of(69.5));
@@ -45,7 +45,7 @@ public class BankAccountDebitTest {
 
     @Disabled("To fix this problem, bigdecimal should be used. I disable the test because it is requested in this way.")
     @Test
-    public void givenEmptyAccount_whenDebitFloatingPointTwice_thenIncreaseBalance() {
+    public void givenAccountWithHundredBalance_whenDebitFloatingPointTwice_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Balance.of(100.0));
         bankAccount.debit(30.10);
         assertEquals(bankAccount.getBalance(), Balance.of(69.9));
