@@ -2,11 +2,12 @@ package com.eteration.simplebanking.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 
 @Builder
 @Getter
 public class BankAccount {
-    private Balance balance;
+    @NonNull private Balance balance;
 
     public void credit(Double creditAmount) {
         this.balance = balance.add(creditAmount);
