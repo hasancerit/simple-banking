@@ -1,0 +1,11 @@
+server:
+  port: 8081
+
+datasource:
+  username: simplebanking
+  password: simplebankingpass
+
+spring:
+  liquibase:
+    change-log: classpath:db/liquibase/changelog-master.yml
+
