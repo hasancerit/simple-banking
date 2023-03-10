@@ -9,6 +9,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
+/**
+ * Used directly JPA instead of spring-boot-starter-data-jpa because
+ * spring-boot-starter-data-jpa's last version doesnt use hibernate 6.2
+ * And here, added configurations for use JPA without spring-boot-starter-data-jpa
+ */
 @Configuration
 @RequiredArgsConstructor
 public class HibernateConfiguration {

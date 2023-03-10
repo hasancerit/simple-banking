@@ -36,7 +36,7 @@
 
 		<!-- Used directly JPA instead of spring-boot-starter-data-jpa because
 		     spring-boot-starter-data-jpa's last version doesnt use hibernate 6.2
-		     And here, added dependencies for use jpa without spring-boot-starter-data-jpa -->
+		     And here, added dependencies for use JPA without spring-boot-starter-data-jpa -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
