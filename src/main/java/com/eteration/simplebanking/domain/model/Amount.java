@@ -1,9 +1,12 @@
 package com.eteration.simplebanking.domain.model;
 
 import com.eteration.simplebanking.domain.exception.InsufficientBalanceException;
+import jakarta.persistence.Embeddable;
 
-//TODO: Is it must be value object?
-public record Amount(Double amount) {
+import java.io.Serializable;
+
+@Embeddable
+public record Amount(Double amount) implements Serializable {
     public static Amount ZERO = Amount.of(0.0);
 
     public static Amount of(Double amount) {

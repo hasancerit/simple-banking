@@ -1,8 +1,12 @@
 package com.eteration.simplebanking.domain.model;
 
 import com.eteration.simplebanking.util.RegexUtil;
+import jakarta.persistence.Embeddable;
 
-public record AccountNumber(String value) {
+import java.io.Serializable;
+
+@Embeddable
+public record AccountNumber(String value) implements Serializable {
     private static final String VALID_REGEX_FOR_VALUE = "^[0-9]{3}-[0-9]{4}$";
 
     public static AccountNumber of(String value) {

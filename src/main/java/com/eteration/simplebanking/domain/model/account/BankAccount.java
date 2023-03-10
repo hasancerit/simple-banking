@@ -2,18 +2,29 @@ package com.eteration.simplebanking.domain.model.account;
 
 import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Builder
 @Getter
+@Entity(name = "BANK_ACCOUNT")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BankAccount {
-    @NonNull private Amount balance;
-    @NonNull private AccountNumber accountNumber;
+    @NonNull
+    @EmbeddedId
+    @AttributeOverride(name = "value", column = @Column(name = "ACCOUNT_NUMBER"))
+    private AccountNumber accountNumber;
+
+    @NonNull
+    @Embedded
+    @AttributeOverride(name = "amount", column = @Column(name = "BALANCE"))
+    private Amount balance;
+
+    @Transient
     @Builder.Default
     private List<Transaction> transactions = new ArrayList<>();
 

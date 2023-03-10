@@ -1,5 +1,6 @@
 package com.eteration.simplebanking.service;
 
+import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.BankAccountRepository;
@@ -28,7 +29,7 @@ public class AccountServiceImp implements AccountService {
     }
 
     private BankAccount getBankAccountOrThrowException(String accountNumber) {
-        return bankAccountRepository.get(accountNumber)
+        return bankAccountRepository.get(AccountNumber.of(accountNumber))
                 .orElseThrow(
                         () -> new RuntimeException("Bank Account Could not Found with AccountNumber: " + accountNumber)
                 );

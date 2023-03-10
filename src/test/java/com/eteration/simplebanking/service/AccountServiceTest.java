@@ -34,7 +34,7 @@ public class AccountServiceTest {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         assertEquals(bankAccount.getTransactions().size(), 0);
 
-        when(bankAccountRepository.get(bankAccount.getAccountNumber().value()))
+        when(bankAccountRepository.get(bankAccount.getAccountNumber()))
                 .thenReturn(Optional.of(bankAccount));
 
         accountServiceImp.credit(bankAccount.getAccountNumber().value(), 56.0);
@@ -52,7 +52,7 @@ public class AccountServiceTest {
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
         assertEquals(bankAccount.getTransactions().size(), 0);
 
-        when(bankAccountRepository.get(bankAccount.getAccountNumber().value()))
+        when(bankAccountRepository.get(bankAccount.getAccountNumber()))
                 .thenReturn(Optional.of(bankAccount));
 
         accountServiceImp.debit(bankAccount.getAccountNumber().value(), 56.0);
@@ -70,7 +70,7 @@ public class AccountServiceTest {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         assertEquals(bankAccount.getTransactions().size(), 0);
 
-        when(bankAccountRepository.get(bankAccount.getAccountNumber().value()))
+        when(bankAccountRepository.get(bankAccount.getAccountNumber()))
                 .thenReturn(Optional.of(bankAccount));
 
         accountServiceImp.credit(bankAccount.getAccountNumber().value(), 56.0);
@@ -86,7 +86,7 @@ public class AccountServiceTest {
     public void givenNotExistAccountNumber_whenCredit_thenThrowError() {
         final String accountNumber = "111-2222";
 
-        when(bankAccountRepository.get(accountNumber))
+        when(bankAccountRepository.get(AccountNumber.of(accountNumber)))
                 .thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> accountServiceImp.credit(accountNumber, 56.0));
@@ -96,7 +96,7 @@ public class AccountServiceTest {
     public void givenNotExistAccountNumber_whenDebit_thenThrowError() {
         final String accountNumber = "111-2222";
 
-        when(bankAccountRepository.get(accountNumber))
+        when(bankAccountRepository.get(AccountNumber.of(accountNumber)))
                 .thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> accountServiceImp.debit(accountNumber, 56.0));
