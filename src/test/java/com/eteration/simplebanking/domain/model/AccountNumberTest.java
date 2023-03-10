@@ -1,6 +1,5 @@
-package com.eteration.simplebanking.domain.model.account;
+package com.eteration.simplebanking.domain.model;
 
-import com.eteration.simplebanking.domain.model.AccountNumber;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
