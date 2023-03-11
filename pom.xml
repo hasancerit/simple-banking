@@ -19,9 +19,32 @@
 	<properties>
 		<java.version>17</java.version>
 		<liquibase.version>4.19.0</liquibase.version>
+
+		<!-- JaCoCo Properties -->
+		<jacoco.version>0.8.8</jacoco.version>
+
+		<!-- Sonar Properties -->
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.language>java</sonar.language>
 	</properties>
 
 	<dependencies>
+		<!-- JaCoCo -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>${jacoco.version}</version>
+		</dependency>
+
+		<!-- Sonar -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.6</version>
+		</dependency>
+
 		<!-- Spring General Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -103,6 +126,40 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+
+			<!-- Sonar
+			 mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=Simple-Banking \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=sqp_8ed0454a5aa313e1907ad315491e215bdba02d69
+			-->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.9.1.2184</version>
+			</plugin>
+
+			<!-- JaCoCo Properties -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
