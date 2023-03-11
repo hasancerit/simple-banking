@@ -3,7 +3,7 @@ package com.eteration.simplebanking.service;
 import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
-import com.eteration.simplebanking.domain.model.account.BankAccountRepository;
+import com.eteration.simplebanking.repository.BankAccountRepository;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
 import lombok.RequiredArgsConstructor;

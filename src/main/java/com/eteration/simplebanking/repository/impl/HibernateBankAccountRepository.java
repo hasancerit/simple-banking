@@ -1,9 +1,9 @@
-package com.eteration.simplebanking.repository;
+package com.eteration.simplebanking.repository.impl;
 
 import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
-import com.eteration.simplebanking.domain.model.account.BankAccountRepository;
 import com.eteration.simplebanking.domain.model.account.Transaction;
+import com.eteration.simplebanking.repository.BankAccountRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;

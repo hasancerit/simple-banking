@@ -3,7 +3,6 @@ package com.eteration.simplebanking.repository;
 import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
-import com.eteration.simplebanking.domain.model.account.BankAccountRepository;
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;

@@ -1,6 +1,7 @@
-package com.eteration.simplebanking.domain.model.account;
+package com.eteration.simplebanking.repository;
 
 import com.eteration.simplebanking.domain.model.AccountNumber;
+import com.eteration.simplebanking.domain.model.account.BankAccount;
 
 import java.util.Optional;
 

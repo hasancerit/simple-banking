@@ -3,7 +3,7 @@ package com.eteration.simplebanking.service;
 import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
-import com.eteration.simplebanking.domain.model.account.BankAccountRepository;
+import com.eteration.simplebanking.repository.BankAccountRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
