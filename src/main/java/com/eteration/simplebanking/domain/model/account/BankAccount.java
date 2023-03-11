@@ -10,6 +10,7 @@ import java.util.List;
 
 @Builder
 @Getter
+@Setter
 @Entity(name = "BANK_ACCOUNT")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

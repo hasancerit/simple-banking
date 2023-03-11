@@ -18,6 +18,7 @@ public class AccountServiceImp implements AccountService {
     public BankAccount credit(String accountNumber, Double amount) {
         BankAccount bankAccount = getBankAccountOrThrowException(accountNumber);
         bankAccount.post(new DepositTransaction(Amount.of(amount)));
+        bankAccountRepository.update(bankAccount);
         return bankAccount;
     }
 
@@ -25,6 +26,7 @@ public class AccountServiceImp implements AccountService {
     public BankAccount debit(String accountNumber, Double amount) {
         BankAccount bankAccount = getBankAccountOrThrowException(accountNumber);
         bankAccount.post(new WithdrawTransaction(Amount.of(amount)));
+        bankAccount = bankAccountRepository.update(bankAccount);
         return bankAccount;
     }
 

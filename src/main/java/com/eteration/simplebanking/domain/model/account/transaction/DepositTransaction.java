@@ -13,6 +13,10 @@ public class DepositTransaction extends Transaction {
         super(amount);
     }
 
+    public static DepositTransaction of(Amount amount) {
+        return new DepositTransaction(amount);
+    }
+
     @Override
     protected void makeChangesOnBankAccount() {
         super.makeChangesOnBankAccount();

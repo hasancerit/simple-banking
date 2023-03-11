@@ -13,6 +13,10 @@ public class WithdrawTransaction extends Transaction {
         super(amount);
     }
 
+    public static WithdrawTransaction of(Amount amount) {
+        return new WithdrawTransaction(amount);
+    }
+
     @Override
     protected void makeChangesOnBankAccount() {
         super.makeChangesOnBankAccount();
