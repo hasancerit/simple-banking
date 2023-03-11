@@ -14,6 +14,7 @@ class TransactionTest {
     void givenAnAccountToDepositTransaction_whenTransactionMakeChangesOnBankAccount_thenIncreaseBalanceOfAccount() {
         BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
+                .owner("Hasan")
                 .build();
 
         Transaction depositTransaction = new DepositTransaction(Amount.of(10.0));
@@ -34,6 +35,7 @@ class TransactionTest {
         BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
                 .balance(Amount.of(20.0))
+                .owner("Hasan")
                 .build();
 
         Transaction withdrawTransaction = new WithdrawTransaction(Amount.of(20.0));

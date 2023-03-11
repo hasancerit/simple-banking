@@ -18,6 +18,7 @@ class BankAccountWithdrawTest {
         bankAccount = BankAccount.builder()
                 .balance(Amount.of(100.0))
                 .accountNumber(AccountNumber.of("111-2222"))
+                .owner("Hasan")
                 .build();
     }
 

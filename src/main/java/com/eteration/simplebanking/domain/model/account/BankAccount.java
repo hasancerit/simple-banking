@@ -5,6 +5,7 @@ import com.eteration.simplebanking.domain.model.Amount;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +27,21 @@ public class BankAccount {
     @Builder.Default
     private Amount balance = Amount.ZERO;
 
+    @NonNull
+    @Column(name = "OWNER")
+    private String owner;
+
+    @Column(name = "CREATED_DATE")
+    private LocalDateTime createdDate;
+
     @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default
     private List<Transaction> transactions = new ArrayList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        createdDate = LocalDateTime.now();
+    }
 
     public void deposit(Amount depositAmount) {
         this.balance = balance.add(depositAmount);

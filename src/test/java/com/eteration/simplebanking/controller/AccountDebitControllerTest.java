@@ -41,6 +41,7 @@ class AccountDebitControllerTest {
         final BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
                 .balance(Amount.of(20.0))
+                .owner("Hasan")
                 .build();
 
         final String approvalCodeFromService = UUID.randomUUID().toString();
@@ -57,7 +58,6 @@ class AccountDebitControllerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertNotNull(response.getContentAsString());
-        System.out.println(response.getContentAsString());
 
         final TransactionResultResponse transactionResultResponse = fromJsonString(response.getContentAsString(), TransactionResultResponse.class);
         assertEquals(approvalCodeFromService, transactionResultResponse.approvalCode());
@@ -87,6 +87,7 @@ class AccountDebitControllerTest {
         final BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
                 .balance(Amount.of(20.0))
+                .owner("Hasan")
                 .build();
         when(accountService.debit(bankAccount.getAccountNumber().value(),transactionAmount)).thenThrow(new InsufficientBalanceException());
 

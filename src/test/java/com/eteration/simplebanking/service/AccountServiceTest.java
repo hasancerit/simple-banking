@@ -30,6 +30,7 @@ class AccountServiceTest {
         BankAccount bankAccount = BankAccount.builder()
                 .balance(Amount.ZERO)
                 .accountNumber(AccountNumber.of("111-2222"))
+                .owner("Hasan")
                 .build();
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());
@@ -48,6 +49,7 @@ class AccountServiceTest {
         BankAccount bankAccount = BankAccount.builder()
                 .balance(Amount.of(100.0))
                 .accountNumber(AccountNumber.of("111-2222"))
+                .owner("Hasan")
                 .build();
 
         assertEquals(Amount.of(100.0), bankAccount.getBalance());
@@ -66,6 +68,7 @@ class AccountServiceTest {
         BankAccount bankAccount = BankAccount.builder()
                 .balance(Amount.ZERO)
                 .accountNumber(AccountNumber.of("111-2222"))
+                .owner("Hasan")
                 .build();
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());

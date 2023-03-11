@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(AccountController.class)
-class AccountControllerTest {
+class AccountGetControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -41,6 +41,7 @@ class AccountControllerTest {
                 .accountNumber(AccountNumber.of("111-2222"))
                 .transactions(List.of(depositTransaction1))
                 .balance(Amount.of(10.0))
+                .owner("Hasan")
                 .build();
 
         //TODO: Dont these
@@ -56,11 +57,13 @@ class AccountControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertNotNull(response.getContentAsString());
 
-        final BankAccountResponse transactionResponseFromApi = fromJsonString(response.getContentAsString(), BankAccountResponse.class);
-        assertEquals(bankAccount.getAccountNumber().value(), transactionResponseFromApi.accountNumber());
-        assertEquals(bankAccount.getBalance().amount(), transactionResponseFromApi.balance());
-        assertEquals(bankAccount.getTransactions().size(), transactionResponseFromApi.transactions().size());
-        assertEquals(bankAccount.getTransactions().get(0).getAmount().amount(), transactionResponseFromApi.transactions().get(0).amount());
+        final BankAccountResponse bankAccountResponseFromApi = fromJsonString(response.getContentAsString(), BankAccountResponse.class);
+        assertEquals(bankAccount.getAccountNumber().value(), bankAccountResponseFromApi.accountNumber());
+        assertEquals(bankAccount.getBalance().amount(), bankAccountResponseFromApi.balance());
+        assertEquals(bankAccount.getOwner(), bankAccountResponseFromApi.owner());
+        assertEquals(bankAccount.getCreatedDate(), bankAccountResponseFromApi.createdDate());
+        assertEquals(bankAccount.getTransactions().size(), bankAccountResponseFromApi.transactions().size());
+        assertEquals(bankAccount.getTransactions().get(0).getAmount().amount(), bankAccountResponseFromApi.transactions().get(0).amount());
     }
 
     @Test

@@ -39,6 +39,7 @@ class AccountCreditControllerTest {
         final Double transactionAmount = 10.0;
         final BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
+                .owner("Hasan")
                 .build();
 
         final String approvalCodeFromService = UUID.randomUUID().toString();

@@ -12,6 +12,7 @@ class BankAccountDepositAndWithdrawPostTest {
     private final BankAccount bankAccount = BankAccount.builder()
             .balance(Amount.ZERO)
             .accountNumber(AccountNumber.of("111-2222"))
+            .owner("Hasan")
             .build();
 
     @Test
