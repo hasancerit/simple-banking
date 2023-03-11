@@ -1,20 +1,21 @@
 package com.eteration.simplebanking.domain.model;
 
+import com.eteration.simplebanking.domain.exception.InvalidAccountNumberException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class AccountNumberTest {
+class AccountNumberTest {
     @Test
-    public void givenValidValue_whenCreatingAccountNumber_thenReturnAccountNumber() {
+    void givenValidValue_whenCreatingAccountNumber_thenReturnAccountNumber() {
         AccountNumber accountNumber = AccountNumber.of("432-4234");
-        assertEquals(accountNumber.value(), "432-4234");
+        assertEquals("432-4234", accountNumber.value());
     }
 
     @Test
-    public void givenInvalidValue_whenCreatingAccountNumber_thenThrowError() {
-        assertThrows(Exception.class, () -> AccountNumber.of("invalidvalue"));
+    void givenInvalidValue_whenCreatingAccountNumber_thenThrowError() {
+        assertThrows(InvalidAccountNumberException.class, () -> AccountNumber.of("invalidvalue"));
     }
 
 }

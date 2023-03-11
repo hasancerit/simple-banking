@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Builder;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 public record TransactionResponse(Double amount) {
@@ -20,6 +19,6 @@ public record TransactionResponse(Double amount) {
     }
 
     public static List<TransactionResponse> from(List<Transaction> transactions) {
-        return transactions.stream().map(TransactionResponse::from).collect(Collectors.toList());
+        return transactions.stream().map(TransactionResponse::from).toList();
     }
 }

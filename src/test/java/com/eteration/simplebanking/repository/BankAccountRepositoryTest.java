@@ -6,6 +6,7 @@ import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
+import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import com.eteration.simplebanking.util.EntityManagerUtil;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Test;
@@ -20,14 +21,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Repository.class))
-public class BankAccountRepositoryTest {
+class BankAccountRepositoryTest {
     @Autowired
     private BankAccountRepository bankAccountRepository;
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
     @Test
-    public void givenPersistedBankAccountId_whenBankAccountRepositoryGet_thenReturnSameBankAccount() {
+    void givenPersistedBankAccountId_whenBankAccountRepositoryGet_thenReturnSameBankAccount() {
         DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
         DepositTransaction depositTransaction2 = DepositTransaction.of(Amount.of(20.0));
         WithdrawTransaction withdrawTransaction1 = WithdrawTransaction.of(Amount.of(20.0));
@@ -60,7 +61,7 @@ public class BankAccountRepositoryTest {
     }
 
     @Test
-    public void givenNotPersistedBankAccountId_whenBankAccountRepositoryGet_thenReturnNull() {
+    void givenNotPersistedBankAccountId_whenBankAccountRepositoryGet_thenReturnNull() {
         DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
         final BankAccount persistedBankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("222-3333"))
@@ -76,14 +77,14 @@ public class BankAccountRepositoryTest {
     }
 
     @Test
-    public void givenNotPersistedRandomBankAccountId_whenBankAccountRepositoryGet_thenReturnNull() {
+    void givenNotPersistedRandomBankAccountId_whenBankAccountRepositoryGet_thenReturnNull() {
         final BankAccount bankAccountFromRepository = bankAccountRepository.get(AccountNumber.of("444-5555")).orElse(null);
         assertNull(bankAccountFromRepository);
     }
 
 
     @Test
-    public void givenPersistedBankAccountAndUpdate_whenBankAccountRepositoryUpdate_thenUpdatePersistence() {
+    void givenPersistedBankAccountAndUpdate_whenBankAccountRepositoryUpdate_thenUpdatePersistence() {
         DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
         DepositTransaction depositTransaction2 = DepositTransaction.of(Amount.of(20.0));
         WithdrawTransaction withdrawTransaction1 = WithdrawTransaction.of(Amount.of(20.0));
@@ -126,13 +127,13 @@ public class BankAccountRepositoryTest {
     }
 
     @Test
-    public void givenNotPersistedBankAccount_whenBankAccountRepositoryUpdate_thenUpdatePersistence2() {
+    void givenNotPersistedBankAccount_whenBankAccountRepositoryUpdate_thenUpdatePersistence2() {
         final BankAccount notPersistedBankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("123-1234"))
                 .balance(Amount.of(10.0))
                 .build();
 
-        assertThrows(RuntimeException.class, () -> bankAccountRepository.update(notPersistedBankAccount));
+        assertThrows(BankAccountNotFoundException.class, () -> bankAccountRepository.update(notPersistedBankAccount));
 
         BankAccount bankAccountFromPersistence =
                 EntityManagerUtil.findAndDetach(entityManagerFactory.createEntityManager(), BankAccount.class, notPersistedBankAccount.getAccountNumber());

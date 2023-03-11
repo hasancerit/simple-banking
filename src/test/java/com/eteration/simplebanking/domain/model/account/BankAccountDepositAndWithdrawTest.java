@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BankAccountDepositAndWithdrawTest {
+class BankAccountDepositAndWithdrawTest {
     private BankAccount bankAccount;
 
     @BeforeEach
-    public void createEmptyAccount() {
+    void createEmptyAccount() {
         bankAccount = BankAccount.builder()
                 .balance(Amount.ZERO)
                 .accountNumber(AccountNumber.of("111-2222"))
@@ -20,7 +20,7 @@ public class BankAccountDepositAndWithdrawTest {
     }
 
     @Test
-    public void givenEmptyAccount_whenDepositAndWithdraw_thenCalculateTheFinalAmount() {
+    void givenEmptyAccount_whenDepositAndWithdraw_thenCalculateTheFinalAmount() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         bankAccount.deposit(Amount.of(55.0));
         assertEquals(bankAccount.getBalance(), Amount.of(55.0));
@@ -31,7 +31,7 @@ public class BankAccountDepositAndWithdrawTest {
 
     @Disabled("To fix this problem, bigdecimal should be used. I disable the test because it is requested in this way.")
     @Test
-    public void givenEmptyAccount_whenDepositAndWithdrawFloatingPoint_thenCalculateTheFinalAmount() {
+    void givenEmptyAccount_whenDepositAndWithdrawFloatingPoint_thenCalculateTheFinalAmount() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         bankAccount.deposit(Amount.of(40.20));
         assertEquals(bankAccount.getBalance(), Amount.of(40.20));

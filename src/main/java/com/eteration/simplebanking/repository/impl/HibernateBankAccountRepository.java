@@ -4,6 +4,7 @@ import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.repository.BankAccountRepository;
+import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -33,7 +34,7 @@ public class HibernateBankAccountRepository implements BankAccountRepository {
         try(EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             BankAccount existingBankAccount = entityManager.find(BankAccount.class, bankAccount.getAccountNumber());
             if(existingBankAccount == null) {
-                throw new RuntimeException("BankAccount with bankAccount could not found");
+                throw new BankAccountNotFoundException("BankAccount with bankAccount could not found");
             }
 
             EntityTransaction transaction = entityManager.getTransaction();

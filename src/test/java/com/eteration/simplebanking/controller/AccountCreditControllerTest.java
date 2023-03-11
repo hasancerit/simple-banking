@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(AccountController.class)
-public class AccountCreditControllerTest {
+class AccountCreditControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -35,7 +35,7 @@ public class AccountCreditControllerTest {
     private AccountService accountService;
 
     @Test
-    public void givenExistedAccountNumber_whenCreditAccountApiCall_thenReturnApprovalCode() throws Exception {
+    void givenExistedAccountNumber_whenCreditAccountApiCall_thenReturnApprovalCode() throws Exception {
         final Double transactionAmount = 10.0;
         final BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
@@ -63,7 +63,7 @@ public class AccountCreditControllerTest {
     }
 
     @Test
-    public void givenNotExistAccountNumber_whenCreditAccountApiCall_thenReturn404() throws Exception {
+    void givenNotExistAccountNumber_whenCreditAccountApiCall_thenReturn404() throws Exception {
         final Double transactionAmount = 10.0;
         String notExistAccountNumber = "111-2222";
         when(accountService.credit(notExistAccountNumber,transactionAmount )).thenThrow(new BankAccountNotFoundException(notExistAccountNumber));

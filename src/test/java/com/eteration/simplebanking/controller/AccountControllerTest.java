@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(AccountController.class)
-public class AccountControllerTest {
+class AccountControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -34,7 +34,7 @@ public class AccountControllerTest {
     private AccountService accountService;
 
     @Test
-    public void givenExistedAccountNumber_whenGetAccountApiCall_thenReturnAccountResponse() throws Exception {
+    void givenExistedAccountNumber_whenGetAccountApiCall_thenReturnAccountResponse() throws Exception {
         DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
 
         final BankAccount bankAccount = BankAccount.builder()
@@ -64,7 +64,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void givenNotExistAccountNumber_whenGetAccountApiCall_thenReturn404() throws Exception {
+    void givenNotExistAccountNumber_whenGetAccountApiCall_thenReturn404() throws Exception {
         String notExistAccountNumber = "111-2222";
         when(accountService.get(notExistAccountNumber)).thenThrow(new BankAccountNotFoundException(notExistAccountNumber));
 

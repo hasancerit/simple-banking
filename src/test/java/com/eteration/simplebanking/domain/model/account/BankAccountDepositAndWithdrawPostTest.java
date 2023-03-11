@@ -8,23 +8,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BankAccountDepositAndWithdrawPostTest {
+class BankAccountDepositAndWithdrawPostTest {
     private final BankAccount bankAccount = BankAccount.builder()
             .balance(Amount.ZERO)
             .accountNumber(AccountNumber.of("111-2222"))
             .build();
 
     @Test
-    public void givenEmptyAccount_whenDepositAndWithdrawPost_thenCalculateTheFinalAmount() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        assertEquals(bankAccount.getTransactions().size(), 0);
+    void givenEmptyAccount_whenDepositAndWithdrawPost_thenCalculateTheFinalAmount() {
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
+        assertEquals(0, bankAccount.getTransactions().size());
 
         bankAccount.post(new DepositTransaction(Amount.of(55.0)));
-        assertEquals(bankAccount.getBalance(), Amount.of(55.0));
-        assertEquals(bankAccount.getTransactions().size(), 1);
+        assertEquals(Amount.of(55.0), bankAccount.getBalance());
+        assertEquals(1, bankAccount.getTransactions().size());
 
         bankAccount.post(new WithdrawTransaction(Amount.of(30.0)));
-        assertEquals(bankAccount.getBalance(), Amount.of(25.0));
-        assertEquals(bankAccount.getTransactions().size(), 2);
+        assertEquals(Amount.of(25.0), bankAccount.getBalance());
+        assertEquals(2, bankAccount.getTransactions().size());
     }
 }

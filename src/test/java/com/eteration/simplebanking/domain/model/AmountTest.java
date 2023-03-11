@@ -1,13 +1,12 @@
 package com.eteration.simplebanking.domain.model;
 
-import com.eteration.simplebanking.domain.model.Amount;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class AmountTest {
+class AmountTest {
     @Test
-    public void givenNegativeAmount_whenCreatingAmount_thenThrowException() {
+    void givenNegativeAmount_whenCreatingAmount_thenThrowException() {
         assertThrows(Exception.class, () -> Amount.of(-100.0));
     }
 

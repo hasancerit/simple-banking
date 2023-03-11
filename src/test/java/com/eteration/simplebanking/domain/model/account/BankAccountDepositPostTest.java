@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BankAccountDepositPostTest {
+class BankAccountDepositPostTest {
     private BankAccount bankAccount;
 
     @BeforeEach
-    public void createEmptyAccount() {
+    void createEmptyAccount() {
         bankAccount = BankAccount.builder()
                 .balance(Amount.ZERO)
                 .accountNumber(AccountNumber.of("111-2222"))
@@ -20,26 +20,26 @@ public class BankAccountDepositPostTest {
     }
 
     @Test
-    public void givenEmptyAccount_whenPostDeposit_thenIncreaseBalance() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        assertEquals(bankAccount.getTransactions().size(), 0);
+    void givenEmptyAccount_whenPostDeposit_thenIncreaseBalance() {
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
+        assertEquals(0, bankAccount.getTransactions().size());
 
         bankAccount.post(new DepositTransaction(Amount.of(55.0)));
-        assertEquals(bankAccount.getBalance(), Amount.of(55.0));
-        assertEquals(bankAccount.getTransactions().size(), 1);
+        assertEquals(Amount.of(55.0), bankAccount.getBalance());
+        assertEquals(1, bankAccount.getTransactions().size());
     }
 
     @Test
-    public void givenEmptyAccount_whenPostDepositTwice_thenIncreaseBalance() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
-        assertEquals(bankAccount.getTransactions().size(), 0);
+    void givenEmptyAccount_whenPostDepositTwice_thenIncreaseBalance() {
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
+        assertEquals(0, bankAccount.getTransactions().size());
 
         bankAccount.post(new DepositTransaction(Amount.of(55.0)));
-        assertEquals(bankAccount.getBalance(), Amount.of(55.0));
-        assertEquals(bankAccount.getTransactions().size(), 1);
+        assertEquals(Amount.of(55.0), bankAccount.getBalance());
+        assertEquals(1, bankAccount.getTransactions().size());
 
         bankAccount.post(new DepositTransaction(Amount.of(33.50)));
-        assertEquals(bankAccount.getBalance(), Amount.of(88.50));
-        assertEquals(bankAccount.getTransactions().size(), 2);
+        assertEquals(Amount.of(88.50), bankAccount.getBalance());
+        assertEquals(2, bankAccount.getTransactions().size());
     }
 }

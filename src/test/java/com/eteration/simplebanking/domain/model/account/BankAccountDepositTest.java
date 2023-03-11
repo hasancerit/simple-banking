@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BankAccountDepositTest {
+class BankAccountDepositTest {
     private BankAccount bankAccount;
 
     @BeforeEach
-    public void createEmptyAccount() {
+    void createEmptyAccount() {
         bankAccount = BankAccount.builder()
                 .balance(Amount.ZERO)
                 .accountNumber(AccountNumber.of("111-2222"))
@@ -20,14 +20,14 @@ public class BankAccountDepositTest {
     }
 
     @Test
-    public void givenEmptyAccount_whenDeposit_thenIncreaseBalance() {
+    void givenEmptyAccount_whenDeposit_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         bankAccount.deposit(Amount.of(100.0));
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
     }
 
     @Test
-    public void givenEmptyAccount_whenDepositTwice_thenIncreaseBalance() {
+    void givenEmptyAccount_whenDepositTwice_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         bankAccount.deposit(Amount.of(100.0));
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
@@ -37,7 +37,7 @@ public class BankAccountDepositTest {
     }
 
     @Test
-    public void givenEmptyAccount_whenDepositFloatingPoint_thenIncreaseBalance() {
+    void givenEmptyAccount_whenDepositFloatingPoint_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         bankAccount.deposit(Amount.of(64.45));
         assertEquals(bankAccount.getBalance(), Amount.of(64.45));
@@ -45,7 +45,7 @@ public class BankAccountDepositTest {
 
     @Disabled("To fix this problem, bigdecimal should be used. I disable the test because it is requested in this way.")
     @Test
-    public void givenEmptyAccount_whenDepositFloatingPointTwice_thenIncreaseBalance() {
+    void givenEmptyAccount_whenDepositFloatingPointTwice_thenIncreaseBalance() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         bankAccount.deposit(Amount.of(30.10));
         assertEquals(bankAccount.getBalance(), Amount.of(30.10));

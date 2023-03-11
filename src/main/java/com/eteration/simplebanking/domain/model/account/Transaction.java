@@ -27,7 +27,7 @@ public abstract class Transaction {
     @JoinColumn(name="BANK_ACCOUNT_NUMBER")
     protected BankAccount bankAccount;
 
-    public Transaction(Amount amount) {
+    protected Transaction(Amount amount) {
         this.amount = amount;
     }
 

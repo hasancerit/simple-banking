@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(AccountController.class)
-public class AccountDebitControllerTest {
+class AccountDebitControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -36,7 +36,7 @@ public class AccountDebitControllerTest {
     private AccountService accountService;
 
     @Test
-    public void givenExistedAccountNumber_whenDebitAccountApiCall_thenReturnApprovalCode() throws Exception {
+    void givenExistedAccountNumber_whenDebitAccountApiCall_thenReturnApprovalCode() throws Exception {
         final Double transactionAmount = 10.0;
         final BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
@@ -65,7 +65,7 @@ public class AccountDebitControllerTest {
     }
 
     @Test
-    public void givenNotExistAccountNumber_whenDebitAccountApiCall_thenReturn404() throws Exception {
+    void givenNotExistAccountNumber_whenDebitAccountApiCall_thenReturn404() throws Exception {
         final Double transactionAmount = 10.0;
         String notExistAccountNumber = "111-2222";
         when(accountService.debit(notExistAccountNumber,transactionAmount )).thenThrow(new BankAccountNotFoundException(notExistAccountNumber));
@@ -82,7 +82,7 @@ public class AccountDebitControllerTest {
     }
 
     @Test
-    public void givenInsufficientBalanceAccountNumber_whenDebitAccountApiCall_thenReturn406() throws Exception {
+    void givenInsufficientBalanceAccountNumber_whenDebitAccountApiCall_thenReturn406() throws Exception {
         final Double transactionAmount = 100.0;
         final BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))

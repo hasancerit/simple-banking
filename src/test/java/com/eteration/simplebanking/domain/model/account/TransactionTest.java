@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TransactionTest {
+class TransactionTest {
     @Test
-    public void givenAnAccountToDepositTransaction_whenTransactionMakeChangesOnBankAccount_thenIncreaseBalanceOfAccount() {
+    void givenAnAccountToDepositTransaction_whenTransactionMakeChangesOnBankAccount_thenIncreaseBalanceOfAccount() {
         BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
                 .build();
@@ -30,7 +30,7 @@ public class TransactionTest {
     }
 
     @Test
-    public void givenAnAccountToWithdrawalTransaction_whenTransactionMakeChangesOnBankAccount_thenReduceBalanceOfAccount() {
+    void givenAnAccountToWithdrawalTransaction_whenTransactionMakeChangesOnBankAccount_thenReduceBalanceOfAccount() {
         BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
                 .balance(Amount.of(20.0))
@@ -50,13 +50,13 @@ public class TransactionTest {
     }
 
     @Test
-    public void givenTransactionsAccountIsNotSet_whenDepositMakeChangesOnBankAccount_thenReturnException() {
+    void givenTransactionsAccountIsNotSet_whenDepositMakeChangesOnBankAccount_thenReturnException() {
         Transaction transaction = new DepositTransaction(Amount.of(100.0));
         assertThrows(RuntimeException.class, transaction::makeChangesOnBankAccount);
     }
 
     @Test
-    public void givenTransactionsAccountIsNotSet_whenWithdrawMakeChangesOnBankAccount_thenReturnException() {
+    void givenTransactionsAccountIsNotSet_whenWithdrawMakeChangesOnBankAccount_thenReturnException() {
         Transaction transaction = new WithdrawTransaction(Amount.of(100.0));
         assertThrows(RuntimeException.class, transaction::makeChangesOnBankAccount);
     }
