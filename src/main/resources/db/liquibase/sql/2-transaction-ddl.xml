@@ -14,7 +14,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="BANK_ACCOUNT_NUMBER" type="VARCHAR(255)">
-                <constraints nullable="false"
+                <constraints nullable="true"
                              foreignKeyName="FK_TRANSACTION_TO_BANK_ACCOUNT"
                              references="BANK_ACCOUNT(ACCOUNT_NUMBER)"/>
             </column>

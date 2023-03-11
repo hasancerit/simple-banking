@@ -34,7 +34,8 @@ public class BankAccount {
     @Column(name = "CREATED_DATE")
     private LocalDateTime createdDate;
 
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="BANK_ACCOUNT_NUMBER")
     @Builder.Default
     private List<Transaction> transactions = new ArrayList<>();
 
@@ -52,8 +53,7 @@ public class BankAccount {
     }
 
     public void post(Transaction transaction) {
-        transaction.setBankAccount(this);
-        transaction.makeChangesOnBankAccount();
+        transaction.makeChangesOnBankAccount(this);
         transactions.add(transaction);
     }
 }

@@ -2,7 +2,6 @@ package com.eteration.simplebanking.repository.impl;
 
 import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
-import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.repository.BankAccountRepository;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import jakarta.persistence.EntityManager;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 //TODO: Better Implementation!
 @Repository
@@ -23,7 +21,7 @@ public class HibernateBankAccountRepository implements BankAccountRepository {
     @Override
     public Optional<BankAccount> get(AccountNumber accountNumber) {
         BankAccount bankAccount;
-        try(EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             bankAccount = entityManager.find(BankAccount.class, accountNumber);
         }
         return Optional.ofNullable(bankAccount);
@@ -31,9 +29,9 @@ public class HibernateBankAccountRepository implements BankAccountRepository {
 
     @Override
     public void update(BankAccount bankAccount) {
-        try(EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             BankAccount existingBankAccount = entityManager.find(BankAccount.class, bankAccount.getAccountNumber());
-            if(existingBankAccount == null) {
+            if (existingBankAccount == null) {
                 throw new BankAccountNotFoundException("BankAccount with bankAccount could not found");
             }
 
@@ -41,7 +39,7 @@ public class HibernateBankAccountRepository implements BankAccountRepository {
             transaction.begin();
 
             bankAccount.getTransactions().forEach(t -> {
-                if(!existingBankAccount.getTransactions().stream().map(Transaction::getId).collect(Collectors.toSet()).contains(t.getId())) {
+                if (t.getId() == null) {
                     existingBankAccount.getTransactions().add(t);
                 }
             });

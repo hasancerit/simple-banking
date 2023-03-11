@@ -1,7 +1,6 @@
 package com.eteration.simplebanking.domain.model.account;
 
 import com.eteration.simplebanking.domain.model.Amount;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,11 +29,6 @@ public abstract class Transaction {
     @Column(name = "CREATED_DATE")
     private LocalDateTime createdDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
-    @JoinColumn(name="BANK_ACCOUNT_NUMBER")
-    protected BankAccount bankAccount;
-
     protected Transaction(Amount amount) {
         this.amount = amount;
     }
@@ -43,9 +37,5 @@ public abstract class Transaction {
         createdDate = LocalDateTime.now();
     }
 
-    protected void makeChangesOnBankAccount() { //TODO: Better name!
-        if (this.bankAccount == null) {
-            throw new RuntimeException("Transaction's bank account is null!");
-        }
-    }
+    protected abstract void makeChangesOnBankAccount(BankAccount bankAccount);
 }

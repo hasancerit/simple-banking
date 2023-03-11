@@ -7,7 +7,6 @@ import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTran
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TransactionTest {
     @Test
@@ -18,16 +17,12 @@ class TransactionTest {
                 .build();
 
         Transaction depositTransaction = new DepositTransaction(Amount.of(10.0));
-        depositTransaction.setBankAccount(bankAccount);
 
-        depositTransaction.makeChangesOnBankAccount();
+        depositTransaction.makeChangesOnBankAccount(bankAccount);
 
         assertEquals(bankAccount.getBalance(), Amount.of(10.0));
         //assertEquals(bankAccount.getTransactions().size(), 1);
-        //TODO: Şu an bankaccount'a Transaction ekleme işini makeChangesOnBankAccount yapmıyor. O işi BankAccount'a bıraktım.
-        //Böyle mi olması gerektğini düşün, bu sınıf ilişkililerini de düşünmeyi gerektiriyor
-        //Belki Transaction sınıfında BankAccount tutmayız, makeChangesOnBankAccount'a BankAccount'ı aktarırız.
-        //Bu sayede makeChangesOnBankAccount farklı bir yere taşınabilir.
+        //BankAccount.transactions'a Transaction ekleme işini makeChangesOnBankAccount yapmıyor. O işi BankAccount.Post'a bıraktım.
     }
 
     @Test
@@ -39,27 +34,11 @@ class TransactionTest {
                 .build();
 
         Transaction withdrawTransaction = new WithdrawTransaction(Amount.of(20.0));
-        withdrawTransaction.setBankAccount(bankAccount);
 
-        withdrawTransaction.makeChangesOnBankAccount();
+        withdrawTransaction.makeChangesOnBankAccount(bankAccount);
 
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         //assertEquals(bankAccount.getTransactions().size(), 1);
-        //TODO: Şu an bankaccount'a Transaction ekleme işini makeChangesOnBankAccount yapmıyor. O işi BankAccount'a bıraktım.
-        //Böyle mi olması gerektğini düşün, bu sınıf ilişkililerini de düşünmeyi gerektiriyor
-        //Belki Transaction sınıfında BankAccount tutmayız, makeChangesOnBankAccount'a BankAccount'ı aktarırız.
-        //Bu sayede makeChangesOnBankAccount farklı bir yere taşınabilir.
-    }
-
-    @Test
-    void givenTransactionsAccountIsNotSet_whenDepositMakeChangesOnBankAccount_thenReturnException() {
-        Transaction transaction = new DepositTransaction(Amount.of(100.0));
-        assertThrows(RuntimeException.class, transaction::makeChangesOnBankAccount);
-    }
-
-    @Test
-    void givenTransactionsAccountIsNotSet_whenWithdrawMakeChangesOnBankAccount_thenReturnException() {
-        Transaction transaction = new WithdrawTransaction(Amount.of(100.0));
-        assertThrows(RuntimeException.class, transaction::makeChangesOnBankAccount);
+        //BankAccount.transactions'a Transaction ekleme işini makeChangesOnBankAccount yapmıyor. O işi BankAccount.Post'a bıraktım.
     }
 }

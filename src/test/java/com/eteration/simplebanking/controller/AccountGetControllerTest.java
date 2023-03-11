@@ -47,9 +47,6 @@ class AccountGetControllerTest {
                 .createdDate(LocalDateTime.now())
                 .build();
 
-        //TODO: Dont these
-        depositTransaction1.setBankAccount(bankAccount);
-
         when(accountService.get(bankAccount.getAccountNumber().value()))
                 .thenReturn(bankAccount);
 

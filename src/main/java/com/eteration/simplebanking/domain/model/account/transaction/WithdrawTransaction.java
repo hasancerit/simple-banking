@@ -1,6 +1,7 @@
 package com.eteration.simplebanking.domain.model.account.transaction;
 
 import com.eteration.simplebanking.domain.model.Amount;
+import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrePersist;
@@ -19,14 +20,14 @@ public class WithdrawTransaction extends Transaction {
     }
 
     @PrePersist
+    @Override
     protected void onCreate() {
         super.onCreate();
         type = "Withdrawal";
     }
 
     @Override
-    protected void makeChangesOnBankAccount() {
-        super.makeChangesOnBankAccount();
-        this.bankAccount.withdraw(this.amount);
+    protected void makeChangesOnBankAccount(BankAccount bankAccount) {
+        bankAccount.withdraw(this.amount);
     }
 }

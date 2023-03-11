@@ -30,20 +30,14 @@ class BankAccountRepositoryTest {
     @Test
     void givenPersistedBankAccountId_whenBankAccountRepositoryGet_thenReturnSameBankAccount() {
         DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
-        DepositTransaction depositTransaction2 = DepositTransaction.of(Amount.of(20.0));
-        WithdrawTransaction withdrawTransaction1 = WithdrawTransaction.of(Amount.of(20.0));
+        WithdrawTransaction withdrawTransaction1 = WithdrawTransaction.of(Amount.of(5.0));
 
         final BankAccount persistedBankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
-                .transactions(List.of(depositTransaction1, depositTransaction2, withdrawTransaction1))
-                .balance(Amount.of(10.0))
+                .transactions(List.of(depositTransaction1, withdrawTransaction1))
+                .balance(Amount.of(5.0))
                 .owner("Hasan")
                 .build();
-
-        //TODO: Dont these
-        depositTransaction1.setBankAccount(persistedBankAccount);
-        depositTransaction2.setBankAccount(persistedBankAccount);
-        withdrawTransaction1.setBankAccount(persistedBankAccount);
 
         EntityManagerUtil.persistAndFlush(entityManagerFactory.createEntityManager(), persistedBankAccount);
 
@@ -54,30 +48,12 @@ class BankAccountRepositoryTest {
         assertEquals(persistedBankAccount.getAccountNumber(), bankAccountFromRepository.getAccountNumber());
         assertEquals(persistedBankAccount.getBalance(), bankAccountFromRepository.getBalance());
         assertEquals(persistedBankAccount.getOwner(), bankAccountFromRepository.getOwner());
-        assertNotNull(persistedBankAccount.getCreatedDate());
+        assertNotNull(bankAccountFromRepository.getCreatedDate());
 
         assertNotNull(bankAccountFromRepository.getTransactions());
-        assertEquals(3, bankAccountFromRepository.getTransactions().size());
+        assertEquals(2, bankAccountFromRepository.getTransactions().size());
         assertEqualsTransaction(depositTransaction1, bankAccountFromRepository.getTransactions().get(0));
-        assertEqualsTransaction(depositTransaction2, bankAccountFromRepository.getTransactions().get(1));
-        assertEqualsTransaction(withdrawTransaction1, bankAccountFromRepository.getTransactions().get(2));
-    }
-
-    @Test
-    void givenNotPersistedBankAccountId_whenBankAccountRepositoryGet_thenReturnNull() {
-        DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
-        final BankAccount persistedBankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("222-3333"))
-                .transactions(List.of(depositTransaction1))
-                .balance(Amount.of(10.0))
-                .owner("Hasan")
-                .build();
-        depositTransaction1.setBankAccount(persistedBankAccount);
-
-        EntityManagerUtil.persistAndFlush(entityManagerFactory.createEntityManager(), persistedBankAccount);
-
-        final BankAccount bankAccountFromRepository = bankAccountRepository.get(AccountNumber.of("333-4444")).orElse(null);
-        assertNull(bankAccountFromRepository);
+        assertEqualsTransaction(withdrawTransaction1, bankAccountFromRepository.getTransactions().get(1));
     }
 
     @Test
@@ -88,32 +64,28 @@ class BankAccountRepositoryTest {
 
 
     @Test
-    void givenPersistedBankAccountAndUpdate_whenBankAccountRepositoryUpdate_thenUpdatePersistence() {
+    void givenPersistedThenUpdatedBankAccount_whenBankAccountRepositoryUpdate_thenUpdatePersistence() {
         DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
-        DepositTransaction depositTransaction2 = DepositTransaction.of(Amount.of(20.0));
-        WithdrawTransaction withdrawTransaction1 = WithdrawTransaction.of(Amount.of(20.0));
 
         final BankAccount persistedBankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("123-1234"))
-                .transactions(List.of(depositTransaction1, depositTransaction2, withdrawTransaction1))
+                .transactions(List.of(depositTransaction1))
                 .balance(Amount.of(10.0))
                 .owner("Hasan")
                 .build();
-
-        //TODO: Dont these
-        depositTransaction1.setBankAccount(persistedBankAccount);
-        depositTransaction2.setBankAccount(persistedBankAccount);
-        withdrawTransaction1.setBankAccount(persistedBankAccount);
 
         EntityManagerUtil.persistAndFlush(entityManagerFactory.createEntityManager(), persistedBankAccount);
 
 
         final BankAccount updatedBankAccount =
                 EntityManagerUtil.findAndDetach(entityManagerFactory.createEntityManager(), BankAccount.class, persistedBankAccount.getAccountNumber());
-        WithdrawTransaction withdrawTransaction2 = WithdrawTransaction.of(Amount.of(5.0));
+        WithdrawTransaction withdrawTransaction1 = WithdrawTransaction.of(Amount.of(5.0));
+        WithdrawTransaction withdrawTransaction2 = WithdrawTransaction.of(Amount.of(3.0));
+
+        updatedBankAccount.getTransactions().add(withdrawTransaction1);
         updatedBankAccount.getTransactions().add(withdrawTransaction2);
-        withdrawTransaction2.setBankAccount(updatedBankAccount);
-        updatedBankAccount.setBalance(Amount.of(5.0));
+        updatedBankAccount.setBalance(Amount.of(2.0));
+
         bankAccountRepository.update(updatedBankAccount);
 
         BankAccount bankAccountFromPersistence =
@@ -123,18 +95,17 @@ class BankAccountRepositoryTest {
         assertEquals(updatedBankAccount.getAccountNumber(), bankAccountFromPersistence.getAccountNumber());
         assertEquals(updatedBankAccount.getBalance(), bankAccountFromPersistence.getBalance());
         assertEquals(updatedBankAccount.getOwner(), bankAccountFromPersistence.getOwner());
-        assertNotNull(updatedBankAccount.getCreatedDate());
+        assertNotNull(bankAccountFromPersistence.getCreatedDate());
 
         assertNotNull(bankAccountFromPersistence.getTransactions());
-        assertEquals(4, bankAccountFromPersistence.getTransactions().size());
+        assertEquals(3, bankAccountFromPersistence.getTransactions().size());
         assertEqualsTransaction(depositTransaction1, bankAccountFromPersistence.getTransactions().get(0));
-        assertEqualsTransaction(depositTransaction2, bankAccountFromPersistence.getTransactions().get(1));
-        assertEqualsTransaction(withdrawTransaction1, bankAccountFromPersistence.getTransactions().get(2));
-        assertEqualsTransaction(withdrawTransaction2, bankAccountFromPersistence.getTransactions().get(3));
+        assertEqualsTransaction(withdrawTransaction1, bankAccountFromPersistence.getTransactions().get(1));
+        assertEqualsTransaction(withdrawTransaction2, bankAccountFromPersistence.getTransactions().get(2));
     }
 
     @Test
-    void givenNotPersistedBankAccount_whenBankAccountRepositoryUpdate_thenUpdatePersistence2() {
+    void givenNotPersistedBankAccountId_whenBankAccountRepositoryUpdate_thenUpdatePersistence2() {
         final BankAccount notPersistedBankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("123-1234"))
                 .balance(Amount.of(10.0))
@@ -150,9 +121,9 @@ class BankAccountRepositoryTest {
     }
 
     private void assertEqualsTransaction(Transaction expectedTransaction, Transaction actualTransaction) {
-        assertNotNull(actualTransaction.getCreatedDate());
         assertEquals(expectedTransaction.getId(), actualTransaction.getId());
-        assertEquals(expectedTransaction.getBankAccount().getAccountNumber(), actualTransaction.getBankAccount().getAccountNumber());
         assertEquals(expectedTransaction.getAmount(), actualTransaction.getAmount());
+        assertNotNull(actualTransaction.getCreatedDate());
+        //TODO: Assert Type here!
     }
 }

@@ -8,7 +8,9 @@ public class EntityManagerUtil {
         entityManager.clear();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
+
         entityManager.persist(bankAccount);
+
         transaction.commit();
         entityManager.close();
     }
