@@ -4,6 +4,6 @@ import com.eteration.simplebanking.domain.model.account.BankAccount;
 
 public interface AccountService {
     BankAccount get(String accountNumber);
-    BankAccount debit(String accountNumber, Double amount);
-    BankAccount credit(String accountNumber, Double amount);
+    String debit(String accountNumber, Double amount);
+    String credit(String accountNumber, Double amount);
 }

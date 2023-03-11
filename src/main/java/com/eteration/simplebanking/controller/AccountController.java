@@ -1,6 +1,8 @@
 package com.eteration.simplebanking.controller;
 
+import com.eteration.simplebanking.controller.dto.req.TransactionRequest;
 import com.eteration.simplebanking.controller.dto.res.BankAccountResponse;
+import com.eteration.simplebanking.controller.dto.res.TransactionResultResponse;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
@@ -20,6 +22,13 @@ public class AccountController {
         final BankAccount bankAccount = accountService.get(accountNumber);
         final BankAccountResponse bankAccountResponse = BankAccountResponse.from(bankAccount);
         return ResponseEntity.ok(bankAccountResponse);
+    }
+
+    @PostMapping("/credit/{accountNumber}")
+    public ResponseEntity<TransactionResultResponse> credit(@PathVariable String accountNumber, @RequestBody TransactionRequest transactionRequest) {
+        final String approvalCode = accountService.credit(accountNumber, transactionRequest.amount());
+        final TransactionResultResponse transactionResultResponse = new TransactionResultResponse(approvalCode, HttpStatus.OK);
+        return ResponseEntity.ok(transactionResultResponse);
     }
 
     @ExceptionHandler(BankAccountNotFoundException.class)

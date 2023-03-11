@@ -23,7 +23,8 @@ public class BankAccount {
     @NonNull
     @Embedded
     @AttributeOverride(name = "amount", column = @Column(name = "BALANCE"))
-    private Amount balance;
+    @Builder.Default
+    private Amount balance = Amount.of(0.0);
 
     @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default

@@ -29,7 +29,7 @@ public class HibernateBankAccountRepository implements BankAccountRepository {
     }
 
     @Override
-    public BankAccount update(BankAccount bankAccount) {
+    public void update(BankAccount bankAccount) {
         try(EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             BankAccount existingBankAccount = entityManager.find(BankAccount.class, bankAccount.getAccountNumber());
             if(existingBankAccount == null) {
@@ -47,7 +47,6 @@ public class HibernateBankAccountRepository implements BankAccountRepository {
             existingBankAccount.setBalance(bankAccount.getBalance());
 
             transaction.commit();
-            return existingBankAccount;
         }
     }
 }
