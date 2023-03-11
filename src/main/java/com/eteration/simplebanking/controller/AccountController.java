@@ -40,7 +40,6 @@ public class AccountController {
     }
 
     @ExceptionHandler(BankAccountNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Void> handleBankAccountNotFoundException() {
         return ResponseEntity.notFound().build();
     }

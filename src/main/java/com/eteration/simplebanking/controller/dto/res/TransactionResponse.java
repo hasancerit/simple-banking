@@ -18,7 +18,7 @@ public record TransactionResponse(Double amount,
 
     public static TransactionResponse from(Transaction transaction) {
         return TransactionResponse.builder()
-                .amount(transaction.getAmount().amount())
+                .amount(transaction.getAmount().value())
                 .type(transaction.getType())
                 .approvalCode(transaction.getApprovalCode())
                 .createdDate(transaction.getCreatedDate())

@@ -13,25 +13,27 @@ import java.util.Arrays;
 
 public class BankAccountTestDataBuilder {
     public static BankAccount bankAccountWithoutTransaction() {
-        RgxGen rgxGen = new RgxGen(AccountNumber.VALID_REGEX_FOR_VALUE);
-        return BankAccount.builder()
-                .accountNumber(AccountNumber.of(rgxGen.generate()))
-                .owner(RandomStringUtils.randomAlphabetic(20))
-                .createdDate(LocalDateTime.now())
-                .build();
+        RgxGen rgxGen = new RgxGen(AccountNumber.VALID_REGEX);
+
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountNumber(AccountNumber.of(rgxGen.generate()));
+        bankAccount.setOwner(RandomStringUtils.randomAlphabetic(20));
+        bankAccount.setCreatedDate(LocalDateTime.now());
+        return bankAccount;
     }
 
     public static BankAccount bankAccountWithTransaction(
             Amount balance,
             Transaction... transactions
     ) {
-        RgxGen rgxGen = new RgxGen(AccountNumber.VALID_REGEX_FOR_VALUE);
-        return BankAccount.builder()
-                .accountNumber(AccountNumber.of(rgxGen.generate()))
-                .owner(RandomStringUtils.randomAlphabetic(20))
-                .balance(balance)
-                .transactions(new ArrayList<>(Arrays.asList(transactions)))
-                .createdDate(LocalDateTime.now())
-                .build();
+        RgxGen rgxGen = new RgxGen(AccountNumber.VALID_REGEX);
+
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setAccountNumber(AccountNumber.of(rgxGen.generate()));
+        bankAccount.setOwner(RandomStringUtils.randomAlphabetic(20));
+        bankAccount.setBalance(balance);
+        bankAccount.setTransactions(new ArrayList<>(Arrays.asList(transactions)));
+        bankAccount.setCreatedDate(LocalDateTime.now());
+        return bankAccount;
     }
 }

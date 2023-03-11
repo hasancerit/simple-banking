@@ -11,11 +11,15 @@ class AccountNumberTest {
     void givenValidValue_whenCreatingAccountNumber_thenReturnAccountNumber() {
         AccountNumber accountNumber = AccountNumber.of("432-4234");
         assertEquals("432-4234", accountNumber.value());
+
+        accountNumber = new AccountNumber("432-4234");
+        assertEquals("432-4234", accountNumber.value());
     }
 
     @Test
     void givenInvalidValue_whenCreatingAccountNumber_thenThrowError() {
-        assertThrows(InvalidAccountNumberException.class, () -> AccountNumber.of("invalidvalue"));
+        assertThrows(InvalidAccountNumberException.class, () -> AccountNumber.of("invalid-value"));
+        assertThrows(InvalidAccountNumberException.class, () -> new AccountNumber("invalid-value"));
     }
 
 }

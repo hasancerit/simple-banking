@@ -32,17 +32,14 @@ public class AccountServiceImp implements AccountService {
     }
 
     private String post(String accountNumber, Transaction transaction) {
-        BankAccount bankAccount = this.getBankAccountOrThrowException(accountNumber);
-        String transactionApprovalCode = bankAccount.post(transaction);
+        final BankAccount bankAccount = this.getBankAccountOrThrowException(accountNumber);
+        final String transactionApprovalCode = bankAccount.post(transaction);
         bankAccountRepository.update(bankAccount);
         return transactionApprovalCode;
     }
 
     private BankAccount getBankAccountOrThrowException(String accountNumber) {
         return bankAccountRepository.get(AccountNumber.of(accountNumber))
-                .orElseThrow(
-                        () -> new BankAccountNotFoundException(accountNumber)
-                );
-
+                .orElseThrow(() -> new BankAccountNotFoundException(accountNumber));
     }
 }

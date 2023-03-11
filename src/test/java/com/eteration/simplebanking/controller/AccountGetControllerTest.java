@@ -50,11 +50,11 @@ class AccountGetControllerTest {
 
         final BankAccountResponse bankAccountResponseFromApi = fromJsonString(response.getContentAsString(), BankAccountResponse.class);
         assertEquals(bankAccount.getAccountNumber().value(), bankAccountResponseFromApi.accountNumber());
-        assertEquals(bankAccount.getBalance().amount(), bankAccountResponseFromApi.balance());
+        assertEquals(bankAccount.getBalance().value(), bankAccountResponseFromApi.balance());
         assertEquals(bankAccount.getOwner(), bankAccountResponseFromApi.owner());
         assertEquals(bankAccount.getCreatedDate(), bankAccountResponseFromApi.createdDate());
         assertEquals(bankAccount.getTransactions().size(), bankAccountResponseFromApi.transactions().size());
-        assertEquals(bankAccount.getTransactions().get(0).getAmount().amount(), bankAccountResponseFromApi.transactions().get(0).amount());
+        assertEquals(bankAccount.getTransactions().get(0).getAmount().value(), bankAccountResponseFromApi.transactions().get(0).amount());
         assertNotNull(bankAccountResponseFromApi.transactions().get(0).createdDate());
         assertNotNull(bankAccount.getTransactions().get(0).getApprovalCode(), bankAccountResponseFromApi.transactions().get(0).approvalCode());
     }

@@ -20,7 +20,7 @@ public class HibernateBankAccountRepository implements BankAccountRepository {
 
     @Override
     public Optional<BankAccount> get(AccountNumber accountNumber) {
-        BankAccount bankAccount;
+        final BankAccount bankAccount;
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             bankAccount = entityManager.find(BankAccount.class, accountNumber);
         }
@@ -30,7 +30,7 @@ public class HibernateBankAccountRepository implements BankAccountRepository {
     @Override
     public void update(BankAccount bankAccount) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-            BankAccount existingBankAccount = entityManager.find(BankAccount.class, bankAccount.getAccountNumber());
+            final BankAccount existingBankAccount = entityManager.find(BankAccount.class, bankAccount.getAccountNumber());
             if (existingBankAccount == null) {
                 throw new BankAccountNotFoundException("BankAccount with bankAccount could not found");
             }

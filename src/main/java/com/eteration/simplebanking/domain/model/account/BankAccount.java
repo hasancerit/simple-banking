@@ -9,25 +9,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity(name = "BANK_ACCOUNT")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BankAccount {
-    @NonNull
     @EmbeddedId
     @AttributeOverride(name = "value", column = @Column(name = "ACCOUNT_NUMBER"))
     private AccountNumber accountNumber;
 
-    @NonNull
     @Embedded
-    @AttributeOverride(name = "amount", column = @Column(name = "BALANCE"))
-    @Builder.Default
+    @AttributeOverride(name = "value", column = @Column(name = "BALANCE"))
     private Amount balance = Amount.ZERO;
 
-    @NonNull
     @Column(name = "OWNER")
     private String owner;
 
@@ -35,13 +29,12 @@ public class BankAccount {
     private LocalDateTime createdDate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="BANK_ACCOUNT_NUMBER")
-    @Builder.Default
+    @JoinColumn(name = "BANK_ACCOUNT_NUMBER")
     private List<Transaction> transactions = new ArrayList<>();
 
     @PrePersist
-    protected void onPersist() {
-        createdDate = LocalDateTime.now();
+    private void onPersist() {
+        this.createdDate = LocalDateTime.now();
     }
 
     public void deposit(Amount depositAmount) {
@@ -53,8 +46,8 @@ public class BankAccount {
     }
 
     public String post(Transaction transaction) {
-        String transactionApprovalCode = transaction.executeTransactionIn(this);
-        transactions.add(transaction);
+        final String transactionApprovalCode = transaction.executeTransactionIn(this);
+        this.transactions.add(transaction);
         return transactionApprovalCode;
     }
 }

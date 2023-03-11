@@ -21,7 +21,7 @@ public record BankAccountResponse(String accountNumber,
     public static BankAccountResponse from(BankAccount bankAccount) {
         return BankAccountResponse.builder()
                 .accountNumber(bankAccount.getAccountNumber().value())
-                .balance(bankAccount.getBalance().amount())
+                .balance(bankAccount.getBalance().value())
                 .owner(bankAccount.getOwner())
                 .transactions(TransactionResponse.from(bankAccount.getTransactions()))
                 .createdDate(bankAccount.getCreatedDate())

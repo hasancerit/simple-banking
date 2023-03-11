@@ -4,21 +4,14 @@ import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import jakarta.persistence.Entity;
-import jakarta.persistence.PrePersist;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE) //For hibernate
 @Entity(name = "WITHDRAW_TRANSACTION")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class WithdrawTransaction extends Transaction {
     public WithdrawTransaction(Amount amount) {
         super(amount, "Withdrawal");
-    }
-
-    @PrePersist
-    @Override
-    protected void onPersist() {
-        super.onPersist();
     }
 
     @Override

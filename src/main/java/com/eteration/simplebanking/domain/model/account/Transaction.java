@@ -12,16 +12,17 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) //For hibernate
 @Entity(name = "TRANSACTION")
 @Inheritance(strategy = InheritanceType.JOINED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     protected Long id;
 
-    @Column(name = "AMOUNT")
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "AMOUNT"))
     protected Amount amount;
 
     @Column(name = "TYPE")
@@ -39,13 +40,13 @@ public abstract class Transaction {
     }
 
     @PrePersist
-    protected void onPersist() {
-        createdDate = LocalDateTime.now();
+    private void onPersist() {
+        this.createdDate = LocalDateTime.now();
     }
 
-    protected String executeTransactionIn(BankAccount bankAccount) { //TODO: Write a domain service and delegate this flow
-        makeChangesOnBankAccount(bankAccount);
-        approvalCode = UUID.randomUUID().toString();
+    protected String executeTransactionIn(BankAccount bankAccount) {
+        this.makeChangesOnBankAccount(bankAccount);
+        this.approvalCode = UUID.randomUUID().toString();
         return approvalCode;
     }
 

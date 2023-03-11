@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,6 +26,26 @@ class AccountServiceTest {
 
     @Mock
     private BankAccountRepository bankAccountRepository;
+
+    @Test
+    void givenExistedAccountId_whenGet_thenReturnAccount() {
+        BankAccount bankAccountFromRepository = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
+
+        when(bankAccountRepository.get(bankAccountFromRepository.getAccountNumber()))
+                .thenReturn(Optional.of(bankAccountFromRepository));
+
+        BankAccount bankAccountFromService = accountServiceImp.get(bankAccountFromRepository.getAccountNumber().value());
+        assertEquals(bankAccountFromRepository.getAccountNumber(), bankAccountFromService.getAccountNumber());
+        assertEquals(bankAccountFromRepository.getOwner(), bankAccountFromService.getOwner());
+        assertEquals(bankAccountFromRepository.getBalance(), bankAccountFromService.getBalance());
+        assertEquals(bankAccountFromRepository.getCreatedDate(), bankAccountFromService.getCreatedDate());
+    }
+
+    @Test
+    void givenNotExistedAccountId_whenGet_thenThrowError() {
+        when(bankAccountRepository.get(any())).thenReturn(Optional.empty());
+        assertThrows(BankAccountNotFoundException.class, () -> accountServiceImp.credit("111-2222", 56.0));
+    }
 
     @Test
     void givenEmptyAccount_whenCredit_thenIncreaseBalance() {
