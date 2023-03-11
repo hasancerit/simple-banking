@@ -39,7 +39,7 @@ class AccountDebitControllerTest {
     void givenExistedAccountNumber_whenDebitAccountApiCall_thenReturnApprovalCode() throws Exception {
         final Double transactionAmount = 10.0;
 
-        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(20.0)
         );
 
@@ -83,7 +83,7 @@ class AccountDebitControllerTest {
     @Test
     void givenInsufficientBalanceAccountNumber_whenDebitAccountApiCall_thenReturn406() throws Exception {
         final Double transactionAmount = 100.0;
-        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(20.0)
         );
 

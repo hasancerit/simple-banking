@@ -10,10 +10,9 @@ import org.apache.commons.lang.RandomStringUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class BankAccountTestDataBuilder {
-    public static BankAccount emptyTransactionBankAccount() {
+    public static BankAccount bankAccountWithoutTransaction() {
         RgxGen rgxGen = new RgxGen(AccountNumber.VALID_REGEX_FOR_VALUE);
         return BankAccount.builder()
                 .accountNumber(AccountNumber.of(rgxGen.generate()))
@@ -22,7 +21,7 @@ public class BankAccountTestDataBuilder {
                 .build();
     }
 
-    public static BankAccount notEmptyTransactionBankAccount(
+    public static BankAccount bankAccountWithTransaction(
             Amount balance,
             Transaction... transactions
     ) {

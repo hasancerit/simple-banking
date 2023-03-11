@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TransactionTest {
     @Test
     void givenAnAccountToDepositTransaction_whenExecuteTransaction_thenIncreaseBalanceOfAccount() {
-        BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         Transaction depositTransaction = new DepositTransaction(Amount.of(10.0));
 
@@ -24,7 +24,7 @@ class TransactionTest {
 
     @Test
     void givenAnAccountToWithdrawalTransaction_whenExecuteTransaction_thenReduceBalanceOfAccount() {
-        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(20.0)
         );
 

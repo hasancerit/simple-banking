@@ -10,8 +10,6 @@ import com.eteration.simplebanking.service.exception.BankAccountNotFoundExceptio
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImp implements AccountService {

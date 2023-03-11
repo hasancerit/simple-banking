@@ -28,7 +28,7 @@ class AccountServiceTest {
 
     @Test
     void givenEmptyAccount_whenCredit_thenIncreaseBalance() {
-        BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());
         assertEquals(0, bankAccount.getTransactions().size());
@@ -43,7 +43,7 @@ class AccountServiceTest {
 
     @Test
     void givenAccountWithHundredBalance_whenDebit_thenSubtractBalance() {
-        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(100.0)
         );
 
@@ -60,7 +60,7 @@ class AccountServiceTest {
 
     @Test
     void givenEmptyAccount_whenCreditAndDebit_thenIncreaseBalance() {
-        BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());
         assertEquals(0, bankAccount.getTransactions().size());

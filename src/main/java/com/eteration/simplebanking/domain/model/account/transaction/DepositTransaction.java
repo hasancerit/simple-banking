@@ -4,7 +4,6 @@ import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import jakarta.persistence.Entity;
-import jakarta.persistence.PrePersist;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

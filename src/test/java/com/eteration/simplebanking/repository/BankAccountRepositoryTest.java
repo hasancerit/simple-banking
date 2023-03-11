@@ -4,11 +4,10 @@ import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
-import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
-import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
 import com.eteration.simplebanking.util.EntityManagerUtil;
+import com.eteration.simplebanking.util.TransactionTestDataBuilder;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,15 +27,10 @@ class BankAccountRepositoryTest {
 
     @Test
     void givenPersistedBankAccountId_whenBankAccountRepositoryGet_thenReturnSameBankAccount() {
-        DepositTransaction depositTransaction1 = new DepositTransaction(Amount.of(10.0));
-        depositTransaction1.setApprovalCode(UUID.randomUUID().toString());
-        WithdrawTransaction withdrawTransaction1 = new WithdrawTransaction(Amount.of(5.0));
-        withdrawTransaction1.setApprovalCode(UUID.randomUUID().toString());
-
-        final BankAccount persistedBankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+        final BankAccount persistedBankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(5.0),
-                depositTransaction1,
-                withdrawTransaction1
+                TransactionTestDataBuilder.approvedDepositTransaction(Amount.of(10.0)),
+                TransactionTestDataBuilder.approvedWithdrawTransaction(Amount.of(5.0))
         );
 
         EntityManagerUtil.persistAndFlush(entityManagerFactory.createEntityManager(), persistedBankAccount);
@@ -55,8 +46,8 @@ class BankAccountRepositoryTest {
 
         assertNotNull(bankAccountFromRepository.getTransactions());
         assertEquals(2, bankAccountFromRepository.getTransactions().size());
-        assertEqualsTransaction(depositTransaction1, bankAccountFromRepository.getTransactions().get(0));
-        assertEqualsTransaction(withdrawTransaction1, bankAccountFromRepository.getTransactions().get(1));
+        assertEqualsTransaction(persistedBankAccount.getTransactions().get(0), bankAccountFromRepository.getTransactions().get(0));
+        assertEqualsTransaction(persistedBankAccount.getTransactions().get(1), bankAccountFromRepository.getTransactions().get(1));
     }
 
     @Test
@@ -68,12 +59,9 @@ class BankAccountRepositoryTest {
 
     @Test
     void givenPersistedThenUpdatedBankAccount_whenBankAccountRepositoryUpdate_thenUpdatePersistence() {
-        DepositTransaction depositTransaction1 = new DepositTransaction(Amount.of(10.0));
-        depositTransaction1.setApprovalCode(UUID.randomUUID().toString());
-
-        final BankAccount persistedBankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+        final BankAccount persistedBankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(10.0),
-                depositTransaction1
+                TransactionTestDataBuilder.approvedDepositTransaction(Amount.of(10.0))
         );
 
         EntityManagerUtil.persistAndFlush(entityManagerFactory.createEntityManager(), persistedBankAccount);
@@ -81,13 +69,12 @@ class BankAccountRepositoryTest {
 
         final BankAccount updatedBankAccount =
                 EntityManagerUtil.findAndDetach(entityManagerFactory.createEntityManager(), BankAccount.class, persistedBankAccount.getAccountNumber());
-        WithdrawTransaction withdrawTransaction1 = new WithdrawTransaction(Amount.of(5.0));
-        withdrawTransaction1.setApprovalCode(UUID.randomUUID().toString());
-        WithdrawTransaction withdrawTransaction2 = new WithdrawTransaction(Amount.of(3.0));
-        withdrawTransaction2.setApprovalCode(UUID.randomUUID().toString());
-
-        updatedBankAccount.getTransactions().add(withdrawTransaction1);
-        updatedBankAccount.getTransactions().add(withdrawTransaction2);
+        updatedBankAccount.getTransactions().add(
+                TransactionTestDataBuilder.approvedWithdrawTransaction(Amount.of(5.0))
+        );
+        updatedBankAccount.getTransactions().add(
+                TransactionTestDataBuilder.approvedWithdrawTransaction(Amount.of(3.0))
+        );
         updatedBankAccount.setBalance(Amount.of(2.0));
 
         bankAccountRepository.update(updatedBankAccount);
@@ -103,14 +90,14 @@ class BankAccountRepositoryTest {
 
         assertNotNull(bankAccountFromPersistence.getTransactions());
         assertEquals(3, bankAccountFromPersistence.getTransactions().size());
-        assertEqualsTransaction(depositTransaction1, bankAccountFromPersistence.getTransactions().get(0));
-        assertEqualsTransaction(withdrawTransaction1, bankAccountFromPersistence.getTransactions().get(1));
-        assertEqualsTransaction(withdrawTransaction2, bankAccountFromPersistence.getTransactions().get(2));
+        assertEqualsTransaction(updatedBankAccount.getTransactions().get(0), bankAccountFromPersistence.getTransactions().get(0));
+        assertEqualsTransaction(updatedBankAccount.getTransactions().get(1), bankAccountFromPersistence.getTransactions().get(1));
+        assertEqualsTransaction(updatedBankAccount.getTransactions().get(2), bankAccountFromPersistence.getTransactions().get(2));
     }
 
     @Test
     void givenNotPersistedBankAccountId_whenBankAccountRepositoryUpdate_thenUpdatePersistence2() {
-        final BankAccount notPersistedBankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
+        final BankAccount notPersistedBankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         assertThrows(BankAccountNotFoundException.class, () -> bankAccountRepository.update(notPersistedBankAccount));
 

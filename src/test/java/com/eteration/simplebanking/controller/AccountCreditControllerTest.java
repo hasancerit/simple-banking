@@ -37,7 +37,7 @@ class AccountCreditControllerTest {
     @Test
     void givenExistedAccountNumber_whenCreditAccountApiCall_thenReturnApprovalCode() throws Exception {
         final Double transactionAmount = 10.0;
-        BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         final String approvalCodeFromService = UUID.randomUUID().toString();
         when(accountService.credit(bankAccount.getAccountNumber().value(), transactionAmount))

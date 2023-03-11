@@ -3,10 +3,10 @@ package com.eteration.simplebanking.controller;
 import com.eteration.simplebanking.controller.dto.res.BankAccountResponse;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
-import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
+import com.eteration.simplebanking.util.TransactionTestDataBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,10 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 import static com.eteration.simplebanking.util.ObjectMapperUtil.fromJsonString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,13 +33,9 @@ class AccountGetControllerTest {
 
     @Test
     void givenExistedAccountNumber_whenGetAccountApiCall_thenReturnAccountResponse() throws Exception {
-        DepositTransaction depositTransaction1 = new DepositTransaction(Amount.of(10.0));
-        depositTransaction1.setCreatedDate(LocalDateTime.now());
-        depositTransaction1.setApprovalCode(UUID.randomUUID().toString());
-
-        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(10.0),
-                depositTransaction1
+                TransactionTestDataBuilder.approvedAndPersistedDepositTransaction(Amount.of(10.0))
         );
 
         when(accountService.get(bankAccount.getAccountNumber().value()))
@@ -64,7 +56,7 @@ class AccountGetControllerTest {
         assertEquals(bankAccount.getTransactions().size(), bankAccountResponseFromApi.transactions().size());
         assertEquals(bankAccount.getTransactions().get(0).getAmount().amount(), bankAccountResponseFromApi.transactions().get(0).amount());
         assertNotNull(bankAccountResponseFromApi.transactions().get(0).createdDate());
-        assertNotNull(depositTransaction1.getApprovalCode(), bankAccountResponseFromApi.transactions().get(0).approvalCode());
+        assertNotNull(bankAccount.getTransactions().get(0).getApprovalCode(), bankAccountResponseFromApi.transactions().get(0).approvalCode());
     }
 
     @Test

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BankAccountDepositTest {
-    private final BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
+    private final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
     @Test
     void givenEmptyAccount_whenDeposit_thenIncreaseBalance() {
