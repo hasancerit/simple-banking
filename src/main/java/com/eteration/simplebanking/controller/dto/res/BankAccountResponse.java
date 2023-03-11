@@ -10,10 +10,10 @@ import java.util.List;
 
 @Builder
 public record BankAccountResponse(String accountNumber,
-                                  Double balance,
                                   String owner,
-                                  List<TransactionResponse> transactions,
-                                  LocalDateTime createdDate) {
+                                  Double balance,
+                                  LocalDateTime createdDate,
+                                  List<TransactionResponse> transactions) {
     @JsonCreator
     public BankAccountResponse {
     }
