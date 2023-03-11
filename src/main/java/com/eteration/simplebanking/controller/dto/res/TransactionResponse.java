@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 public record TransactionResponse(Double amount,
                                   String type,
+                                  String approvalCode,
                                   LocalDateTime createdDate) {
     @JsonCreator
     public TransactionResponse {
@@ -19,6 +20,7 @@ public record TransactionResponse(Double amount,
         return TransactionResponse.builder()
                 .amount(transaction.getAmount().amount())
                 .type(transaction.getType())
+                .approvalCode(transaction.getApprovalCode())
                 .createdDate(transaction.getCreatedDate())
                 .build();
     }

@@ -12,18 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class WithdrawTransaction extends Transaction {
     public WithdrawTransaction(Amount amount) {
-        super(amount);
-    }
-
-    public static WithdrawTransaction of(Amount amount) {
-        return new WithdrawTransaction(amount);
+        super(amount, "Withdrawal");
     }
 
     @PrePersist
     @Override
-    protected void onCreate() {
-        super.onCreate();
-        type = "Withdrawal";
+    protected void onPersist() {
+        super.onPersist();
     }
 
     @Override

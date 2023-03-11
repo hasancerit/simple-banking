@@ -12,18 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DepositTransaction extends Transaction {
     public DepositTransaction(Amount amount) {
-        super(amount);
-    }
-
-    public static DepositTransaction of(Amount amount) {
-        return new DepositTransaction(amount);
-    }
-
-    @PrePersist
-    @Override
-    protected void onCreate() {
-        super.onCreate();
-        type = "Deposit";
+        super(amount, "Deposit");
     }
 
     @Override

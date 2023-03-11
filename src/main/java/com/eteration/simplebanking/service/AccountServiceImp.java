@@ -25,17 +25,17 @@ public class AccountServiceImp implements AccountService {
     @Override
     public String credit(String accountNumber, Double amount) {
         BankAccount bankAccount = this.getBankAccountOrThrowException(accountNumber);
-        bankAccount.post(new DepositTransaction(Amount.of(amount)));
+        String transactionApprovalCode = bankAccount.post(new DepositTransaction(Amount.of(amount)));
         bankAccountRepository.update(bankAccount);
-        return UUID.randomUUID().toString(); //TODO: Bunu post metodundan al!
+        return transactionApprovalCode;
     }
 
     @Override
     public String debit(String accountNumber, Double amount) {
         BankAccount bankAccount = this.getBankAccountOrThrowException(accountNumber);
-        bankAccount.post(new WithdrawTransaction(Amount.of(amount)));
+        String transactionApprovalCode = bankAccount.post(new WithdrawTransaction(Amount.of(amount)));
         bankAccountRepository.update(bankAccount);
-        return UUID.randomUUID().toString(); //TODO: Bunu post metodundan al!
+        return transactionApprovalCode;
     }
 
     private BankAccount getBankAccountOrThrowException(String accountNumber) {

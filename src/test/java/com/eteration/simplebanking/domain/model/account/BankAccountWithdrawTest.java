@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -19,6 +21,7 @@ class BankAccountWithdrawTest {
                 .balance(Amount.of(100.0))
                 .accountNumber(AccountNumber.of("111-2222"))
                 .owner("Hasan")
+                .createdDate(LocalDateTime.now())
                 .build();
     }
 

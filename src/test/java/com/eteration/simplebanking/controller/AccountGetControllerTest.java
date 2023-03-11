@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static com.eteration.simplebanking.util.ObjectMapperUtil.fromJsonString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,8 +37,9 @@ class AccountGetControllerTest {
 
     @Test
     void givenExistedAccountNumber_whenGetAccountApiCall_thenReturnAccountResponse() throws Exception {
-        DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
+        DepositTransaction depositTransaction1 = new DepositTransaction(Amount.of(10.0));
         depositTransaction1.setCreatedDate(LocalDateTime.now());
+        depositTransaction1.setApprovalCode(UUID.randomUUID().toString());
 
         final BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
@@ -56,7 +58,7 @@ class AccountGetControllerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertNotNull(response.getContentAsString());
-        System.out.println(response.getContentAsString());
+
         final BankAccountResponse bankAccountResponseFromApi = fromJsonString(response.getContentAsString(), BankAccountResponse.class);
         assertEquals(bankAccount.getAccountNumber().value(), bankAccountResponseFromApi.accountNumber());
         assertEquals(bankAccount.getBalance().amount(), bankAccountResponseFromApi.balance());
@@ -65,6 +67,7 @@ class AccountGetControllerTest {
         assertEquals(bankAccount.getTransactions().size(), bankAccountResponseFromApi.transactions().size());
         assertEquals(bankAccount.getTransactions().get(0).getAmount().amount(), bankAccountResponseFromApi.transactions().get(0).amount());
         assertNotNull(bankAccountResponseFromApi.transactions().get(0).createdDate());
+        assertNotNull(depositTransaction1.getApprovalCode(), bankAccountResponseFromApi.transactions().get(0).approvalCode());
     }
 
     @Test

@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,6 +32,7 @@ class AccountServiceTest {
                 .balance(Amount.ZERO)
                 .accountNumber(AccountNumber.of("111-2222"))
                 .owner("Hasan")
+                .createdDate(LocalDateTime.now())
                 .build();
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());
@@ -50,6 +52,7 @@ class AccountServiceTest {
                 .balance(Amount.of(100.0))
                 .accountNumber(AccountNumber.of("111-2222"))
                 .owner("Hasan")
+                .createdDate(LocalDateTime.now())
                 .build();
 
         assertEquals(Amount.of(100.0), bankAccount.getBalance());
@@ -69,6 +72,7 @@ class AccountServiceTest {
                 .balance(Amount.ZERO)
                 .accountNumber(AccountNumber.of("111-2222"))
                 .owner("Hasan")
+                .createdDate(LocalDateTime.now())
                 .build();
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());

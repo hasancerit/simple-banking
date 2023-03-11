@@ -40,7 +40,7 @@ public class BankAccount {
     private List<Transaction> transactions = new ArrayList<>();
 
     @PrePersist
-    protected void onCreate() {
+    protected void onPersist() {
         createdDate = LocalDateTime.now();
     }
 
@@ -52,8 +52,9 @@ public class BankAccount {
         this.balance = balance.subtract(withdrawAmount);
     }
 
-    public void post(Transaction transaction) {
-        transaction.makeChangesOnBankAccount(this);
+    public String post(Transaction transaction) {
+        String transactionApprovalCode = transaction.executeTransactionIn(this);
         transactions.add(transaction);
+        return transactionApprovalCode;
     }
 }

@@ -6,6 +6,8 @@ import com.eteration.simplebanking.domain.model.account.transaction.DepositTrans
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BankAccountDepositPostTest {
@@ -17,6 +19,7 @@ class BankAccountDepositPostTest {
                 .balance(Amount.ZERO)
                 .accountNumber(AccountNumber.of("111-2222"))
                 .owner("Hasan")
+                .createdDate(LocalDateTime.now())
                 .build();
     }
 

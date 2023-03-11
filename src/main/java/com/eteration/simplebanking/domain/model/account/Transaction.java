@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -26,15 +27,26 @@ public abstract class Transaction {
     @Column(name = "TYPE")
     protected String type;
 
+    @Column(name = "APPROVAL_CODE")
+    protected String approvalCode;
+
     @Column(name = "CREATED_DATE")
     private LocalDateTime createdDate;
 
-    protected Transaction(Amount amount) {
+    protected Transaction(Amount amount, String type) {
         this.amount = amount;
+        this.type = type;
     }
 
-    protected void onCreate() {
+    @PrePersist
+    protected void onPersist() {
         createdDate = LocalDateTime.now();
+    }
+
+    protected String executeTransactionIn(BankAccount bankAccount) { //TODO: Write a domain service and delegate this flow
+        makeChangesOnBankAccount(bankAccount);
+        approvalCode = UUID.randomUUID().toString();
+        return approvalCode;
     }
 
     protected abstract void makeChangesOnBankAccount(BankAccount bankAccount);

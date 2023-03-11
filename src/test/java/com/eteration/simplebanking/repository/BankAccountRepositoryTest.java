@@ -17,6 +17,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,8 +30,10 @@ class BankAccountRepositoryTest {
 
     @Test
     void givenPersistedBankAccountId_whenBankAccountRepositoryGet_thenReturnSameBankAccount() {
-        DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
-        WithdrawTransaction withdrawTransaction1 = WithdrawTransaction.of(Amount.of(5.0));
+        DepositTransaction depositTransaction1 = new DepositTransaction(Amount.of(10.0));
+        depositTransaction1.setApprovalCode(UUID.randomUUID().toString());
+        WithdrawTransaction withdrawTransaction1 = new WithdrawTransaction(Amount.of(5.0));
+        withdrawTransaction1.setApprovalCode(UUID.randomUUID().toString());
 
         final BankAccount persistedBankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
@@ -65,7 +68,8 @@ class BankAccountRepositoryTest {
 
     @Test
     void givenPersistedThenUpdatedBankAccount_whenBankAccountRepositoryUpdate_thenUpdatePersistence() {
-        DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
+        DepositTransaction depositTransaction1 = new DepositTransaction(Amount.of(10.0));
+        depositTransaction1.setApprovalCode(UUID.randomUUID().toString());
 
         final BankAccount persistedBankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("123-1234"))
@@ -79,8 +83,10 @@ class BankAccountRepositoryTest {
 
         final BankAccount updatedBankAccount =
                 EntityManagerUtil.findAndDetach(entityManagerFactory.createEntityManager(), BankAccount.class, persistedBankAccount.getAccountNumber());
-        WithdrawTransaction withdrawTransaction1 = WithdrawTransaction.of(Amount.of(5.0));
-        WithdrawTransaction withdrawTransaction2 = WithdrawTransaction.of(Amount.of(3.0));
+        WithdrawTransaction withdrawTransaction1 = new WithdrawTransaction(Amount.of(5.0));
+        withdrawTransaction1.setApprovalCode(UUID.randomUUID().toString());
+        WithdrawTransaction withdrawTransaction2 = new WithdrawTransaction(Amount.of(3.0));
+        withdrawTransaction2.setApprovalCode(UUID.randomUUID().toString());
 
         updatedBankAccount.getTransactions().add(withdrawTransaction1);
         updatedBankAccount.getTransactions().add(withdrawTransaction2);
@@ -123,6 +129,7 @@ class BankAccountRepositoryTest {
     private void assertEqualsTransaction(Transaction expectedTransaction, Transaction actualTransaction) {
         assertEquals(expectedTransaction.getId(), actualTransaction.getId());
         assertEquals(expectedTransaction.getAmount(), actualTransaction.getAmount());
+        assertEquals(expectedTransaction.getApprovalCode(), actualTransaction.getApprovalCode());
         assertNotNull(actualTransaction.getCreatedDate());
         //TODO: Assert Type here!
     }
