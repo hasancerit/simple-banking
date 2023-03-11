@@ -1,12 +1,12 @@
 package com.eteration.simplebanking.controller;
 
 import com.eteration.simplebanking.controller.dto.res.BankAccountResponse;
-import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
+import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,13 +41,10 @@ class AccountGetControllerTest {
         depositTransaction1.setCreatedDate(LocalDateTime.now());
         depositTransaction1.setApprovalCode(UUID.randomUUID().toString());
 
-        final BankAccount bankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("111-2222"))
-                .transactions(List.of(depositTransaction1))
-                .balance(Amount.of(10.0))
-                .owner("Hasan")
-                .createdDate(LocalDateTime.now())
-                .build();
+        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+                Amount.of(10.0),
+                depositTransaction1
+        );
 
         when(accountService.get(bankAccount.getAccountNumber().value()))
                 .thenReturn(bankAccount);

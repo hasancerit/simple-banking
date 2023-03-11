@@ -2,10 +2,10 @@ package com.eteration.simplebanking.controller;
 
 import com.eteration.simplebanking.controller.dto.req.TransactionRequest;
 import com.eteration.simplebanking.controller.dto.res.TransactionResultResponse;
-import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
+import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -37,10 +37,7 @@ class AccountCreditControllerTest {
     @Test
     void givenExistedAccountNumber_whenCreditAccountApiCall_thenReturnApprovalCode() throws Exception {
         final Double transactionAmount = 10.0;
-        final BankAccount bankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("111-2222"))
-                .owner("Hasan")
-                .build();
+        BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
 
         final String approvalCodeFromService = UUID.randomUUID().toString();
         when(accountService.credit(bankAccount.getAccountNumber().value(), transactionAmount))

@@ -1,9 +1,9 @@
 package com.eteration.simplebanking.domain.model.account;
 
-import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
+import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,10 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TransactionTest {
     @Test
     void givenAnAccountToDepositTransaction_whenExecuteTransaction_thenIncreaseBalanceOfAccount() {
-        BankAccount bankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("111-2222"))
-                .owner("Hasan")
-                .build();
+        BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
 
         Transaction depositTransaction = new DepositTransaction(Amount.of(10.0));
 
@@ -27,11 +24,9 @@ class TransactionTest {
 
     @Test
     void givenAnAccountToWithdrawalTransaction_whenExecuteTransaction_thenReduceBalanceOfAccount() {
-        BankAccount bankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("111-2222"))
-                .balance(Amount.of(20.0))
-                .owner("Hasan")
-                .build();
+        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+                Amount.of(20.0)
+        );
 
         Transaction withdrawTransaction = new WithdrawTransaction(Amount.of(20.0));
 

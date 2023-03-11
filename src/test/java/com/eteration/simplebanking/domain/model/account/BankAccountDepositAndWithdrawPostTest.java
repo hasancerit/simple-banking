@@ -1,22 +1,15 @@
 package com.eteration.simplebanking.domain.model.account;
 
-import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
+import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BankAccountDepositAndWithdrawPostTest {
-    private final BankAccount bankAccount = BankAccount.builder()
-            .balance(Amount.ZERO)
-            .accountNumber(AccountNumber.of("111-2222"))
-            .owner("Hasan")
-            .createdDate(LocalDateTime.now())
-            .build();
+    private final BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
 
     @Test
     void givenEmptyAccount_whenDepositAndWithdrawPost_thenCalculateTheFinalAmount() {

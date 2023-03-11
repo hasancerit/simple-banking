@@ -7,6 +7,7 @@ import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
+import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
 import com.eteration.simplebanking.util.EntityManagerUtil;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Test;
@@ -35,12 +36,11 @@ class BankAccountRepositoryTest {
         WithdrawTransaction withdrawTransaction1 = new WithdrawTransaction(Amount.of(5.0));
         withdrawTransaction1.setApprovalCode(UUID.randomUUID().toString());
 
-        final BankAccount persistedBankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("111-2222"))
-                .transactions(List.of(depositTransaction1, withdrawTransaction1))
-                .balance(Amount.of(5.0))
-                .owner("Hasan")
-                .build();
+        final BankAccount persistedBankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+                Amount.of(5.0),
+                depositTransaction1,
+                withdrawTransaction1
+        );
 
         EntityManagerUtil.persistAndFlush(entityManagerFactory.createEntityManager(), persistedBankAccount);
 
@@ -71,12 +71,10 @@ class BankAccountRepositoryTest {
         DepositTransaction depositTransaction1 = new DepositTransaction(Amount.of(10.0));
         depositTransaction1.setApprovalCode(UUID.randomUUID().toString());
 
-        final BankAccount persistedBankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("123-1234"))
-                .transactions(List.of(depositTransaction1))
-                .balance(Amount.of(10.0))
-                .owner("Hasan")
-                .build();
+        final BankAccount persistedBankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+                Amount.of(10.0),
+                depositTransaction1
+        );
 
         EntityManagerUtil.persistAndFlush(entityManagerFactory.createEntityManager(), persistedBankAccount);
 
@@ -112,11 +110,7 @@ class BankAccountRepositoryTest {
 
     @Test
     void givenNotPersistedBankAccountId_whenBankAccountRepositoryUpdate_thenUpdatePersistence2() {
-        final BankAccount notPersistedBankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("123-1234"))
-                .balance(Amount.of(10.0))
-                .owner("Hasan")
-                .build();
+        final BankAccount notPersistedBankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
 
         assertThrows(BankAccountNotFoundException.class, () -> bankAccountRepository.update(notPersistedBankAccount));
 

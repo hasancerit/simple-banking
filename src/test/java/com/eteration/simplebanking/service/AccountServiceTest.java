@@ -5,13 +5,13 @@ import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.repository.BankAccountRepository;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
+import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,12 +28,7 @@ class AccountServiceTest {
 
     @Test
     void givenEmptyAccount_whenCredit_thenIncreaseBalance() {
-        BankAccount bankAccount = BankAccount.builder()
-                .balance(Amount.ZERO)
-                .accountNumber(AccountNumber.of("111-2222"))
-                .owner("Hasan")
-                .createdDate(LocalDateTime.now())
-                .build();
+        BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());
         assertEquals(0, bankAccount.getTransactions().size());
@@ -48,12 +43,9 @@ class AccountServiceTest {
 
     @Test
     void givenAccountWithHundredBalance_whenDebit_thenSubtractBalance() {
-        BankAccount bankAccount = BankAccount.builder()
-                .balance(Amount.of(100.0))
-                .accountNumber(AccountNumber.of("111-2222"))
-                .owner("Hasan")
-                .createdDate(LocalDateTime.now())
-                .build();
+        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+                Amount.of(100.0)
+        );
 
         assertEquals(Amount.of(100.0), bankAccount.getBalance());
         assertEquals(0, bankAccount.getTransactions().size());
@@ -68,12 +60,7 @@ class AccountServiceTest {
 
     @Test
     void givenEmptyAccount_whenCreditAndDebit_thenIncreaseBalance() {
-        BankAccount bankAccount = BankAccount.builder()
-                .balance(Amount.ZERO)
-                .accountNumber(AccountNumber.of("111-2222"))
-                .owner("Hasan")
-                .createdDate(LocalDateTime.now())
-                .build();
+        BankAccount bankAccount = BankAccountTestDataBuilder.emptyTransactionBankAccount();
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());
         assertEquals(0, bankAccount.getTransactions().size());

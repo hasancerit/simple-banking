@@ -3,11 +3,11 @@ package com.eteration.simplebanking.controller;
 import com.eteration.simplebanking.controller.dto.req.TransactionRequest;
 import com.eteration.simplebanking.controller.dto.res.TransactionResultResponse;
 import com.eteration.simplebanking.domain.exception.InsufficientBalanceException;
-import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
+import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,11 +38,10 @@ class AccountDebitControllerTest {
     @Test
     void givenExistedAccountNumber_whenDebitAccountApiCall_thenReturnApprovalCode() throws Exception {
         final Double transactionAmount = 10.0;
-        final BankAccount bankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("111-2222"))
-                .balance(Amount.of(20.0))
-                .owner("Hasan")
-                .build();
+
+        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+                Amount.of(20.0)
+        );
 
         final String approvalCodeFromService = UUID.randomUUID().toString();
         when(accountService.debit(bankAccount.getAccountNumber().value(), transactionAmount))
@@ -51,7 +50,7 @@ class AccountDebitControllerTest {
         TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/"+ bankAccount.getAccountNumber().value() + "/debit")
+                post("/account/v1/" + bankAccount.getAccountNumber().value() + "/debit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();
@@ -68,12 +67,12 @@ class AccountDebitControllerTest {
     void givenNotExistAccountNumber_whenDebitAccountApiCall_thenReturn404() throws Exception {
         final Double transactionAmount = 10.0;
         String notExistAccountNumber = "111-2222";
-        when(accountService.debit(notExistAccountNumber,transactionAmount )).thenThrow(new BankAccountNotFoundException(notExistAccountNumber));
+        when(accountService.debit(notExistAccountNumber, transactionAmount)).thenThrow(new BankAccountNotFoundException(notExistAccountNumber));
 
         TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/"+ notExistAccountNumber + "/debit")
+                post("/account/v1/" + notExistAccountNumber + "/debit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();
@@ -84,17 +83,16 @@ class AccountDebitControllerTest {
     @Test
     void givenInsufficientBalanceAccountNumber_whenDebitAccountApiCall_thenReturn406() throws Exception {
         final Double transactionAmount = 100.0;
-        final BankAccount bankAccount = BankAccount.builder()
-                .accountNumber(AccountNumber.of("111-2222"))
-                .balance(Amount.of(20.0))
-                .owner("Hasan")
-                .build();
-        when(accountService.debit(bankAccount.getAccountNumber().value(),transactionAmount)).thenThrow(new InsufficientBalanceException());
+        BankAccount bankAccount = BankAccountTestDataBuilder.notEmptyTransactionBankAccount(
+                Amount.of(20.0)
+        );
+
+        when(accountService.debit(bankAccount.getAccountNumber().value(), transactionAmount)).thenThrow(new InsufficientBalanceException());
 
         TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/"+ bankAccount.getAccountNumber().value() + "/debit")
+                post("/account/v1/" + bankAccount.getAccountNumber().value() + "/debit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();
