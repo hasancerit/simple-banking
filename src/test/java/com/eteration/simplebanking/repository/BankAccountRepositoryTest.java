@@ -150,6 +150,7 @@ class BankAccountRepositoryTest {
     }
 
     private void assertEqualsTransaction(Transaction expectedTransaction, Transaction actualTransaction) {
+        assertNotNull(actualTransaction.getCreatedDate());
         assertEquals(expectedTransaction.getId(), actualTransaction.getId());
         assertEquals(expectedTransaction.getBankAccount().getAccountNumber(), actualTransaction.getBankAccount().getAccountNumber());
         assertEquals(expectedTransaction.getAmount(), actualTransaction.getAmount());

@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.eteration.simplebanking.util.ObjectMapperUtil.fromJsonString;
@@ -36,12 +37,14 @@ class AccountGetControllerTest {
     @Test
     void givenExistedAccountNumber_whenGetAccountApiCall_thenReturnAccountResponse() throws Exception {
         DepositTransaction depositTransaction1 = DepositTransaction.of(Amount.of(10.0));
+        depositTransaction1.setCreatedDate(LocalDateTime.now());
 
         final BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
                 .transactions(List.of(depositTransaction1))
                 .balance(Amount.of(10.0))
                 .owner("Hasan")
+                .createdDate(LocalDateTime.now())
                 .build();
 
         //TODO: Dont these
@@ -56,7 +59,7 @@ class AccountGetControllerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertNotNull(response.getContentAsString());
-
+        System.out.println(response.getContentAsString());
         final BankAccountResponse bankAccountResponseFromApi = fromJsonString(response.getContentAsString(), BankAccountResponse.class);
         assertEquals(bankAccount.getAccountNumber().value(), bankAccountResponseFromApi.accountNumber());
         assertEquals(bankAccount.getBalance().amount(), bankAccountResponseFromApi.balance());
@@ -64,6 +67,7 @@ class AccountGetControllerTest {
         assertEquals(bankAccount.getCreatedDate(), bankAccountResponseFromApi.createdDate());
         assertEquals(bankAccount.getTransactions().size(), bankAccountResponseFromApi.transactions().size());
         assertEquals(bankAccount.getTransactions().get(0).getAmount().amount(), bankAccountResponseFromApi.transactions().get(0).amount());
+        assertNotNull(bankAccountResponseFromApi.transactions().get(0).createdDate());
     }
 
     @Test

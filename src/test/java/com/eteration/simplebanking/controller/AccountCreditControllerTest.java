@@ -49,7 +49,7 @@ class AccountCreditControllerTest {
         TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/credit/" + bankAccount.getAccountNumber().value())
+                post("/account/v1/"+ bankAccount.getAccountNumber().value() + "/credit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();
@@ -72,7 +72,7 @@ class AccountCreditControllerTest {
         TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/credit/" + notExistAccountNumber)
+                post("/account/v1/"+ notExistAccountNumber + "/credit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();

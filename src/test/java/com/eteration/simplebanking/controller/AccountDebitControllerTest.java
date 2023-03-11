@@ -51,7 +51,7 @@ class AccountDebitControllerTest {
         TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/debit/" + bankAccount.getAccountNumber().value())
+                post("/account/v1/"+ bankAccount.getAccountNumber().value() + "/debit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();
@@ -73,7 +73,7 @@ class AccountDebitControllerTest {
         TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/debit/" + notExistAccountNumber)
+                post("/account/v1/"+ notExistAccountNumber + "/debit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();
@@ -94,7 +94,7 @@ class AccountDebitControllerTest {
         TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/debit/" + bankAccount.getAccountNumber().value())
+                post("/account/v1/"+ bankAccount.getAccountNumber().value() + "/debit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();

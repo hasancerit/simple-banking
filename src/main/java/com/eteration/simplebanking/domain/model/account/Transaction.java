@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity(name = "TRANSACTION")
@@ -22,6 +24,12 @@ public abstract class Transaction {
     @Column(name = "AMOUNT")
     protected Amount amount;
 
+    @Column(name = "TYPE")
+    protected String type;
+
+    @Column(name = "CREATED_DATE")
+    private LocalDateTime createdDate;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
     @JoinColumn(name="BANK_ACCOUNT_NUMBER")
@@ -29,6 +37,10 @@ public abstract class Transaction {
 
     protected Transaction(Amount amount) {
         this.amount = amount;
+    }
+
+    protected void onCreate() {
+        createdDate = LocalDateTime.now();
     }
 
     protected void makeChangesOnBankAccount() { //TODO: Better name!

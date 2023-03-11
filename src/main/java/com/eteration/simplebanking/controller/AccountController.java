@@ -25,14 +25,14 @@ public class AccountController {
         return ResponseEntity.ok(bankAccountResponse);
     }
 
-    @PostMapping("/credit/{accountNumber}")
+    @PostMapping("/{accountNumber}/credit")
     public ResponseEntity<TransactionResultResponse> credit(@PathVariable String accountNumber, @RequestBody TransactionRequest transactionRequest) {
         final String approvalCode = accountService.credit(accountNumber, transactionRequest.amount());
         final TransactionResultResponse transactionResultResponse = new TransactionResultResponse(approvalCode, HttpStatus.OK);
         return ResponseEntity.ok(transactionResultResponse);
     }
 
-    @PostMapping("/debit/{accountNumber}")
+    @PostMapping("/{accountNumber}/debit")
     public ResponseEntity<TransactionResultResponse> debit(@PathVariable String accountNumber, @RequestBody TransactionRequest transactionRequest) {
         final String approvalCode = accountService.debit(accountNumber, transactionRequest.amount());
         final TransactionResultResponse transactionResultResponse = new TransactionResultResponse(approvalCode, HttpStatus.OK);

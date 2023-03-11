@@ -5,10 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
-    <changeSet author="simplebanking" id="4">
-        <addColumn tableName="BANK_ACCOUNT">
-            <column name="OWNER" type="VARCHAR(100)" defaultValue="-">
-                <constraints nullable="false"/>
+    <changeSet author="simplebanking" id="6">
+        <addColumn tableName="TRANSACTION">
+            <column name="TYPE" type="VARCHAR(255)" defaultValue="Deposit">
+                <constraints nullable="false" checkConstraint="CHECK IN('Deposit','Withdrawal')"/>
             </column>
 
             <column name="CREATED_DATE" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">

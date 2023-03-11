@@ -3,6 +3,7 @@ package com.eteration.simplebanking.domain.model.account.transaction;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrePersist;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,12 @@ public class WithdrawTransaction extends Transaction {
 
     public static WithdrawTransaction of(Amount amount) {
         return new WithdrawTransaction(amount);
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        super.onCreate();
+        type = "Withdrawal";
     }
 
     @Override
