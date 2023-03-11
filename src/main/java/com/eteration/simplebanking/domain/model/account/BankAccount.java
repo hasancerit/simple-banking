@@ -24,7 +24,7 @@ public class BankAccount {
     @AttributeOverride(name = "amount", column = @Column(name = "BALANCE"))
     private Amount balance;
 
-    @Transient
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default
     private List<Transaction> transactions = new ArrayList<>();
 
