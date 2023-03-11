@@ -14,7 +14,6 @@ public class TransactionTest {
     public void givenAnAccountToDepositTransaction_whenTransactionMakeChangesOnBankAccount_thenIncreaseBalanceOfAccount() {
         BankAccount bankAccount = BankAccount.builder()
                 .accountNumber(AccountNumber.of("111-2222"))
-                .balance(Amount.of(0.0))
                 .build();
 
         Transaction depositTransaction = new DepositTransaction(Amount.of(10.0));
@@ -42,7 +41,7 @@ public class TransactionTest {
 
         withdrawTransaction.makeChangesOnBankAccount();
 
-        assertEquals(bankAccount.getBalance(), Amount.of(0.0));
+        assertEquals(bankAccount.getBalance(), Amount.ZERO);
         //assertEquals(bankAccount.getTransactions().size(), 1);
         //TODO: Şu an bankaccount'a Transaction ekleme işini makeChangesOnBankAccount yapmıyor. O işi BankAccount'a bıraktım.
         //Böyle mi olması gerektğini düşün, bu sınıf ilişkililerini de düşünmeyi gerektiriyor

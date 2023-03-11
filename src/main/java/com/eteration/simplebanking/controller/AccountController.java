@@ -3,6 +3,7 @@ package com.eteration.simplebanking.controller;
 import com.eteration.simplebanking.controller.dto.req.TransactionRequest;
 import com.eteration.simplebanking.controller.dto.res.BankAccountResponse;
 import com.eteration.simplebanking.controller.dto.res.TransactionResultResponse;
+import com.eteration.simplebanking.domain.exception.InsufficientBalanceException;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
@@ -31,8 +32,20 @@ public class AccountController {
         return ResponseEntity.ok(transactionResultResponse);
     }
 
+    @PostMapping("/debit/{accountNumber}")
+    public ResponseEntity<TransactionResultResponse> debit(@PathVariable String accountNumber, @RequestBody TransactionRequest transactionRequest) {
+        final String approvalCode = accountService.debit(accountNumber, transactionRequest.amount());
+        final TransactionResultResponse transactionResultResponse = new TransactionResultResponse(approvalCode, HttpStatus.OK);
+        return ResponseEntity.ok(transactionResultResponse);
+    }
+
     @ExceptionHandler(BankAccountNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleBankAccountNotFoundException() {
+    }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public void handleInsufficientBalanceExceptionException() {
     }
 }

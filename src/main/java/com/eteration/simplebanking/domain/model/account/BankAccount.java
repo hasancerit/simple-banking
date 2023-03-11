@@ -24,7 +24,7 @@ public class BankAccount {
     @Embedded
     @AttributeOverride(name = "amount", column = @Column(name = "BALANCE"))
     @Builder.Default
-    private Amount balance = Amount.of(0.0);
+    private Amount balance = Amount.ZERO;
 
     @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default
