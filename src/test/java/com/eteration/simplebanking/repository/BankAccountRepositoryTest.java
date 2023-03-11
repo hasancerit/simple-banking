@@ -4,9 +4,9 @@ import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.BankAccountRepository;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -21,7 +21,7 @@ public class BankAccountRepositoryTest {
     @Autowired
     private BankAccountRepository bankAccountRepository;
     @Autowired
-    private SessionFactory sessionFactory;
+    private EntityManagerFactory entityManagerFactory;
 
     @Test
     public void whenPersistBankAccount_givenPersistedIdToBankAccountRepositoryGet_thenReturnSameBankAccount() {
@@ -58,11 +58,12 @@ public class BankAccountRepositoryTest {
     }
 
 
-
     private void saveBankAccount(BankAccount bankAccount) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.persist(bankAccount);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(bankAccount);
         transaction.commit();
+        entityManager.close();
     }
 }
