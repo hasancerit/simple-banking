@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="simplebanking" id="2">
+        <createTable tableName="TRANSACTION">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints  nullable="false"  primaryKey="true"  unique="true"/>
+            </column>
+            <column name="AMOUNT" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BANK_ACCOUNT_NUMBER" type="VARCHAR(255)">
+                <constraints nullable="false"
+                             foreignKeyName="FK_TRANSACTION_TO_BANK_ACCOUNT"
+                             references="BANK_ACCOUNT(ACCOUNT_NUMBER)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
