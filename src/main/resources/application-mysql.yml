@@ -1,6 +1,4 @@
-spring:
-  datasource:
-    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3307/simplebanking}
-    username: ${DATASOURCE_USERNAME:simplebanking}
-    password: ${DATASOURCE_PASSWORD:simplebankingpass}
-    driverClassName: com.mysql.cj.jdbc.Driver
+DATASOURCE_URL: jdbc:mysql://localhost:3307/simplebanking
+DATASOURCE_USERNAME: simplebanking
+DATASOURCE_PASSWORD: simplebankingpass
+DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver

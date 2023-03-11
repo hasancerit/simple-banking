@@ -5,3 +5,9 @@ spring:
   liquibase:
     change-log: classpath:db/liquibase/changelog-master.yml
 
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driverClassName: ${DATASOURCE_DRIVER_CLASS_NAME}
+

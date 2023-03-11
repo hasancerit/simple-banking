@@ -1,0 +1,9 @@
+DATASOURCE_URL: jdbc:h2:mem:testdb
+DATASOURCE_USERNAME: sa
+DATASOURCE_PASSWORD: password
+DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+
+spring:
+  h2:
+    console:
+      enabled: true
