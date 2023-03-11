@@ -1,6 +1,7 @@
 package com.eteration.simplebanking.controller.dto.res;
 
 import com.eteration.simplebanking.domain.model.account.Transaction;
+import com.eteration.simplebanking.domain.model.account.transaction.TransactionType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Builder;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Builder
 public record TransactionResponse(Double amount,
-                                  String type,
+                                  TransactionType type,
                                   String approvalCode,
                                   LocalDateTime createdDate) {
     @JsonCreator

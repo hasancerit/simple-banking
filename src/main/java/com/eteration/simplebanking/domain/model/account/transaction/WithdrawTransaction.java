@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "WITHDRAW_TRANSACTION")
 public class WithdrawTransaction extends Transaction {
     public WithdrawTransaction(Amount amount) {
-        super(amount, "Withdrawal");
+        super(amount, TransactionType.WITHDRAWAL);
     }
 
     @Override

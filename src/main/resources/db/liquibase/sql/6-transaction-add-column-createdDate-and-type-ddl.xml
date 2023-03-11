@@ -8,7 +8,7 @@
     <changeSet author="simplebanking" id="6">
         <addColumn tableName="TRANSACTION">
             <column name="TYPE" type="VARCHAR(255)" defaultValue="Deposit">
-                <constraints nullable="false" checkConstraint="CHECK IN('Deposit','Withdrawal')"/>
+                <constraints nullable="false" checkConstraint="CHECK IN('DEPOSIT','WITHDRAWAL')"/>
             </column>
 
             <column name="CREATED_DATE" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">

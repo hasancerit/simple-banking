@@ -1,6 +1,7 @@
 package com.eteration.simplebanking.domain.model.account;
 
 import com.eteration.simplebanking.domain.model.Amount;
+import com.eteration.simplebanking.domain.model.account.transaction.TransactionType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,7 +27,7 @@ public abstract class Transaction {
     protected Amount amount;
 
     @Column(name = "TYPE")
-    protected String type;
+    protected TransactionType type;
 
     @Column(name = "APPROVAL_CODE")
     protected String approvalCode;
@@ -34,7 +35,7 @@ public abstract class Transaction {
     @Column(name = "CREATED_DATE")
     private LocalDateTime createdDate;
 
-    protected Transaction(Amount amount, String type) {
+    protected Transaction(Amount amount, TransactionType type) {
         this.amount = amount;
         this.type = type;
     }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "DEPOSIT_TRANSACTION")
 public class DepositTransaction extends Transaction {
     public DepositTransaction(Amount amount) {
-        super(amount, "Deposit");
+        super(amount, TransactionType.DEPOSIT);
     }
 
     @Override
