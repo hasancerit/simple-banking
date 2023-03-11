@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Embeddable
 public record Amount(Double value) implements Serializable {
-    public static Amount ZERO = Amount.of(0.0);
+    public static final Amount ZERO = Amount.of(0.0);
 
     public Amount {
         if(value < 0) {

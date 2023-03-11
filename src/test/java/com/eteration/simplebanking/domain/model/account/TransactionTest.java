@@ -19,7 +19,8 @@ class TransactionTest {
 
         assertEquals(bankAccount.getBalance(), Amount.of(10.0));
         //assertEquals(bankAccount.getTransactions().size(), 1);
-        //BankAccount.transactions'a Transaction ekleme işini makeChangesOnBankAccount yapmıyor. O işi BankAccount.Post'a bıraktım.
+        //Transaction.makeChangesOnBankAccount function not taking the responsibility of add transaction to BankAccount.transactions
+        //This responsibility belong BankAccount.Post
     }
 
     @Test
@@ -34,6 +35,7 @@ class TransactionTest {
 
         assertEquals(bankAccount.getBalance(), Amount.ZERO);
         //assertEquals(bankAccount.getTransactions().size(), 1);
-        //BankAccount.transactions'a Transaction ekleme işini makeChangesOnBankAccount yapmıyor. O işi BankAccount.Post'a bıraktım.
+        //Transaction.makeChangesOnBankAccount function not taking the responsibility of add transaction to BankAccount.transactions
+        //This responsibility belong BankAccount.Post
     }
 }

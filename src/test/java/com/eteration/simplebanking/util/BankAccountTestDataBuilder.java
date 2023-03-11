@@ -5,7 +5,7 @@ import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.github.curiousoddman.rgxgen.RgxGen;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

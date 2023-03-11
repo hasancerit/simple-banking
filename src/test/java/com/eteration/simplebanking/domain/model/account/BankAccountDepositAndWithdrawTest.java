@@ -20,7 +20,7 @@ class BankAccountDepositAndWithdrawTest {
         assertEquals(bankAccount.getBalance(), Amount.of(25.0));
     }
 
-    @Disabled("To fix this problem, bigdecimal should be used. I disable the test because it is requested in this way.")
+    @Disabled("To fix this problem, BigDecimal should be used. I disable the test because it is requested in this way.")
     @Test
     void givenEmptyAccount_whenDepositAndWithdrawFloatingPoint_thenCalculateTheFinalAmount() {
         assertEquals(bankAccount.getBalance(), Amount.ZERO);

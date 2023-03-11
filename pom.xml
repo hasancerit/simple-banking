@@ -38,13 +38,6 @@
 			<version>${jacoco.version}</version>
 		</dependency>
 
-		<!-- Sonar -->
-		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.8.6</version>
-		</dependency>
-
 		<!-- Spring General Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -58,7 +51,7 @@
 		</dependency>
 
 		<!-- Used directly JPA instead of spring-boot-starter-data-jpa because
-		     spring-boot-starter-data-jpa's last version doesnt use hibernate 6.2
+		     spring-boot-starter-data-jpa last version does not use hibernate 6.2
 		     And here, added dependencies for use JPA without spring-boot-starter-data-jpa -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -119,6 +112,14 @@
 			<version>1.4</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Apache Commons Lang -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -136,12 +137,6 @@
 				</configuration>
 			</plugin>
 
-			<!-- Sonar
-			 mvn clean verify sonar:sonar \
-  -Dsonar.projectKey=Simple-Banking \
-  -Dsonar.host.url=http://localhost:9000 \
-  -Dsonar.login=sqp_8ed0454a5aa313e1907ad315491e215bdba02d69
-			-->
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>

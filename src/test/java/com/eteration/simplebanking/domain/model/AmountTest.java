@@ -38,7 +38,7 @@ class AmountTest {
         new Amount(12.4);
     }
 
-    @Disabled("To fix this problem, bigdecimal should be used. I disable the test because it is requested in this way.")
+    @Disabled("To fix this problem, BigDecimal should be used. I disable the test because it is requested in this way.")
     @Test
     void givenFloatingAmount_whenAmountAdd_thenReturnTotalAmount() {
         Amount amount = Amount.of(10.4);

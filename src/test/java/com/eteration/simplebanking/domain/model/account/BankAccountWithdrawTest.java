@@ -39,7 +39,7 @@ class BankAccountWithdrawTest {
         assertEquals(bankAccount.getBalance(), Amount.of(69.50));
     }
 
-    @Disabled("To fix this problem, bigdecimal should be used. I disable the test because it is requested in this way.")
+    @Disabled("To fix this problem, BigDecimal should be used. I disable the test because it is requested in this way.")
     @Test
     void givenAccountWithHundredBalance_whenWithdrawFloatingPointTwice_thenSubtractBalance() {
         assertEquals(bankAccount.getBalance(), Amount.of(100.0));
