@@ -10,7 +10,7 @@
             <column name="ACCOUNT_NUMBER" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-            <column name="BALANCE" type="DOUBLE">
+            <column name="BALANCE" type="DOUBLE" defaultValue="0.0">
                 <constraints nullable="false"/>
             </column>
         </createTable>
