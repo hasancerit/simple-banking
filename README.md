@@ -36,7 +36,7 @@
 **Note: The application tested with MySql and H2. So problems may occur with another databases.**
 
 ---
-**Swagger UI:** http://localhost:8080/swagger-ui/index.html#/account-controller/credit
+**Swagger UI:** http://localhost:8080/swagger-ui/index.html
 
 
 **H2 Console (If you use):** http://localhost:8080/h2-console
