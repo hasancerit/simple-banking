@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+//TODO: Tests will be add when required fields is not sent in request (This and other controller tests)
 @WebMvcTest(AccountController.class)
 class AccountBillPaymentControllerTest {
     @Autowired
@@ -33,20 +34,18 @@ class AccountBillPaymentControllerTest {
     @MockBean
     private AccountService accountService;
 
+    private final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
+    private final Double transactionAmount = 10.0;
     private final String billNumber = "1234334";
     private final String payee = "Vodafone";
 
     @Test
     void givenServiceReturnApprovalCode_whenBillPaymentApiCall_thenReturnApprovalCode() throws Exception {
-        final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
-        final Double transactionAmount = 10.0;
-
         final String approvalCodeFromService = UUID.randomUUID().toString();
         when(accountService.billPayment(accountNumber, transactionAmount, billNumber, payee))
                 .thenReturn(approvalCodeFromService);
 
-        final MockHttpServletResponse response =
-                sendRequestBillPayment(accountNumber, transactionAmount);
+        final MockHttpServletResponse response = sendRequestBillPayment();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertNotNull(response.getContentAsString());
@@ -59,34 +58,25 @@ class AccountBillPaymentControllerTest {
 
     @Test
     void givenServiceThrowBankAccountNotFoundException_whenBillPaymentApiCall_thenReturn404() throws Exception {
-        final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
-        final Double transactionAmount = 10.0;
-
         when(accountService.billPayment(accountNumber, transactionAmount, billNumber, payee))
                 .thenThrow(new BankAccountNotFoundException(accountNumber));
 
-        final MockHttpServletResponse response =
-                sendRequestBillPayment(accountNumber, transactionAmount);
+        final MockHttpServletResponse response = sendRequestBillPayment();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
     void givenServiceThrowInsufficientBalanceAccountNumber_whenBillPaymentApiCall_thenReturn406() throws Exception {
-        final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
-        final Double transactionAmount = 100.0;
-
         when(accountService.billPayment(accountNumber, transactionAmount, billNumber, payee))
                 .thenThrow(new InsufficientBalanceException());
 
-        final MockHttpServletResponse response =
-                sendRequestBillPayment(accountNumber, transactionAmount);
+        final MockHttpServletResponse response = sendRequestBillPayment();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_ACCEPTABLE.value());
     }
 
-    private MockHttpServletResponse sendRequestBillPayment(String accountNumber,
-                                                           Double transactionAmount) throws Exception {
+    private MockHttpServletResponse sendRequestBillPayment() throws Exception {
         final BillPaymentTransactionRequest billPaymentTransactionRequest =
                 new BillPaymentTransactionRequest(transactionAmount, billNumber, payee);
 

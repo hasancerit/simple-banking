@@ -32,15 +32,15 @@ class AccountCreditControllerTest {
     @MockBean
     private AccountService accountService;
 
+    private final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
+    private final Double transactionAmount = 10.0;
+
     @Test
     void givenServiceReturnApprovalCode_whenCreditApiCall_thenReturnApprovalCode() throws Exception {
-        final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
-        final Double transactionAmount = 10.0;
-
         final String approvalCodeFromService = UUID.randomUUID().toString();
         when(accountService.credit(accountNumber, transactionAmount)).thenReturn(approvalCodeFromService);
 
-        final MockHttpServletResponse response = sendRequestCredit(accountNumber, transactionAmount);
+        final MockHttpServletResponse response = sendRequestCredit();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertNotNull(response.getContentAsString());
@@ -53,18 +53,15 @@ class AccountCreditControllerTest {
 
     @Test
     void givenServiceThrowBankAccountNotFoundException_whenCreditApiCall_thenReturn404() throws Exception {
-        final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
-        final Double transactionAmount = 10.0;
-
         when(accountService.credit(accountNumber, transactionAmount))
                 .thenThrow(new BankAccountNotFoundException(accountNumber));
 
-        final MockHttpServletResponse response = sendRequestCredit(accountNumber, transactionAmount);
+        final MockHttpServletResponse response = sendRequestCredit();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
-    private MockHttpServletResponse sendRequestCredit(String accountNumber, Double transactionAmount) throws Exception {
+    private MockHttpServletResponse sendRequestCredit() throws Exception {
         final TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
 
         return mockMvc.perform(
