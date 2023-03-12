@@ -133,11 +133,7 @@
 			<version>2.10.1</version>
 		</dependency>
 
-		<!-- Spring Fox And Swagger UI-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
+		<!-- Open API-->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
