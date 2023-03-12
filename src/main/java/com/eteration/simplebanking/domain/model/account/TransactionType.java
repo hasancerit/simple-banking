@@ -1,4 +1,4 @@
-package com.eteration.simplebanking.domain.model.account.transaction;
+package com.eteration.simplebanking.domain.model.account;
 
 public enum TransactionType {
     WITHDRAWAL,

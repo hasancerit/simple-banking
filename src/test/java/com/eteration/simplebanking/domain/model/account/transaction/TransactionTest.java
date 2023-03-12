@@ -1,6 +1,8 @@
-package com.eteration.simplebanking.domain.model.account;
+package com.eteration.simplebanking.domain.model.account.transaction;
 
 import com.eteration.simplebanking.domain.model.Amount;
+import com.eteration.simplebanking.domain.model.account.BankAccount;
+import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.domain.model.account.transaction.BillPaymentTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;

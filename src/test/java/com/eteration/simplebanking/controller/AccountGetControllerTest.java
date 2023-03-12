@@ -1,7 +1,7 @@
 package com.eteration.simplebanking.controller;
 
-import com.eteration.simplebanking.controller.dto.res.BankAccountResponse;
-import com.eteration.simplebanking.controller.dto.res.TransactionResponse;
+import com.eteration.simplebanking.controller.dto.response.BankAccountResponse;
+import com.eteration.simplebanking.controller.dto.response.TransactionResponse;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;

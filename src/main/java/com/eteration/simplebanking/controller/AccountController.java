@@ -1,9 +1,9 @@
 package com.eteration.simplebanking.controller;
 
-import com.eteration.simplebanking.controller.dto.req.BillPaymentTransactionRequest;
-import com.eteration.simplebanking.controller.dto.req.TransactionRequest;
-import com.eteration.simplebanking.controller.dto.res.BankAccountResponse;
-import com.eteration.simplebanking.controller.dto.res.TransactionResultResponse;
+import com.eteration.simplebanking.controller.dto.request.BillPaymentTransactionRequest;
+import com.eteration.simplebanking.controller.dto.request.TransactionRequest;
+import com.eteration.simplebanking.controller.dto.response.BankAccountResponse;
+import com.eteration.simplebanking.controller.dto.response.TransactionResultResponse;
 import com.eteration.simplebanking.domain.exception.InsufficientBalanceException;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.service.AccountService;

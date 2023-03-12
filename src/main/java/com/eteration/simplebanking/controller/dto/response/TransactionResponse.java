@@ -1,7 +1,7 @@
-package com.eteration.simplebanking.controller.dto.res;
+package com.eteration.simplebanking.controller.dto.response;
 
 import com.eteration.simplebanking.domain.model.account.Transaction;
-import com.eteration.simplebanking.domain.model.account.transaction.TransactionType;
+import com.eteration.simplebanking.domain.model.account.TransactionType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Builder;
 

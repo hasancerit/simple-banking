@@ -3,6 +3,7 @@ package com.eteration.simplebanking.domain.model.account.transaction;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.domain.model.account.Transaction;
+import com.eteration.simplebanking.domain.model.account.TransactionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;

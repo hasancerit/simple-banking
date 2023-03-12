@@ -2,7 +2,7 @@ package com.eteration.simplebanking.util;
 
 import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
-import com.eteration.simplebanking.domain.model.account.transaction.TransactionType;
+import com.eteration.simplebanking.domain.model.account.TransactionType;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;

@@ -1,7 +1,7 @@
 package com.eteration.simplebanking.controller;
 
-import com.eteration.simplebanking.controller.dto.req.TransactionRequest;
-import com.eteration.simplebanking.controller.dto.res.TransactionResultResponse;
+import com.eteration.simplebanking.controller.dto.request.TransactionRequest;
+import com.eteration.simplebanking.controller.dto.response.TransactionResultResponse;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import com.eteration.simplebanking.util.BankAccountTestDataBuilder;

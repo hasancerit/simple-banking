@@ -1,4 +1,4 @@
-package com.eteration.simplebanking.service;
+package com.eteration.simplebanking.service.impl;
 
 import com.eteration.simplebanking.domain.model.AccountNumber;
 import com.eteration.simplebanking.domain.model.Amount;
@@ -8,6 +8,7 @@ import com.eteration.simplebanking.domain.model.account.transaction.BillPaymentT
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
 import com.eteration.simplebanking.repository.BankAccountRepository;
+import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
