@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//TODO: Refactor this test class
 @DataJpaTest(includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Repository.class))
 class BankAccountRepositoryTest {
     @Autowired
@@ -45,14 +46,16 @@ class BankAccountRepositoryTest {
         assertNotNull(bankAccountFromRepository.getCreatedDate());
 
         assertNotNull(bankAccountFromRepository.getTransactions());
-        assertEquals(2, bankAccountFromRepository.getTransactions().size());
+        assertEquals(persistedBankAccount.getTransactions().size(), bankAccountFromRepository.getTransactions().size());
         assertEqualsTransaction(persistedBankAccount.getTransactions().get(0), bankAccountFromRepository.getTransactions().get(0));
         assertEqualsTransaction(persistedBankAccount.getTransactions().get(1), bankAccountFromRepository.getTransactions().get(1));
     }
 
     @Test
     void givenNotPersistedRandomBankAccountId_whenBankAccountRepositoryGet_thenReturnNull() {
-        final BankAccount bankAccountFromRepository = bankAccountRepository.get(AccountNumber.of("444-5555")).orElse(null);
+        final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
+        final BankAccount bankAccountFromRepository =
+                bankAccountRepository.get(AccountNumber.of(accountNumber)).orElse(null);
         assertNull(bankAccountFromRepository);
     }
 
@@ -67,8 +70,12 @@ class BankAccountRepositoryTest {
         EntityManagerUtil.persistAndFlush(entityManagerFactory.createEntityManager(), persistedBankAccount);
 
 
-        final BankAccount updatedBankAccount =
-                EntityManagerUtil.findAndDetach(entityManagerFactory.createEntityManager(), BankAccount.class, persistedBankAccount.getAccountNumber());
+        final BankAccount updatedBankAccount = EntityManagerUtil.findAndDetach(
+                entityManagerFactory.createEntityManager(),
+                BankAccount.class,
+                persistedBankAccount.getAccountNumber()
+        );
+
         updatedBankAccount.getTransactions().add(
                 TransactionTestDataBuilder.approvedWithdrawTransaction(Amount.of(5.0))
         );
@@ -89,19 +96,19 @@ class BankAccountRepositoryTest {
         assertNotNull(bankAccountFromPersistence.getCreatedDate());
 
         assertNotNull(bankAccountFromPersistence.getTransactions());
-        assertEquals(3, bankAccountFromPersistence.getTransactions().size());
+        assertEquals(updatedBankAccount.getTransactions().size(), bankAccountFromPersistence.getTransactions().size());
         assertEqualsTransaction(updatedBankAccount.getTransactions().get(0), bankAccountFromPersistence.getTransactions().get(0));
         assertEqualsTransaction(updatedBankAccount.getTransactions().get(1), bankAccountFromPersistence.getTransactions().get(1));
         assertEqualsTransaction(updatedBankAccount.getTransactions().get(2), bankAccountFromPersistence.getTransactions().get(2));
     }
 
     @Test
-    void givenNotPersistedBankAccountId_whenBankAccountRepositoryUpdate_thenUpdatePersistence2() {
+    void givenNotPersistedBankAccount_whenBankAccountRepositoryUpdate_thenThrowBankAccountNotFoundExceptionAndDontPersist() {
         final BankAccount notPersistedBankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         assertThrows(BankAccountNotFoundException.class, () -> bankAccountRepository.update(notPersistedBankAccount));
 
-        BankAccount bankAccountFromPersistence =
+        final BankAccount bankAccountFromPersistence =
                 EntityManagerUtil.findAndDetach(entityManagerFactory.createEntityManager(), BankAccount.class, notPersistedBankAccount.getAccountNumber());
 
         assertNull(bankAccountFromPersistence);
@@ -111,7 +118,7 @@ class BankAccountRepositoryTest {
         assertEquals(expectedTransaction.getId(), actualTransaction.getId());
         assertEquals(expectedTransaction.getAmount(), actualTransaction.getAmount());
         assertEquals(expectedTransaction.getApprovalCode(), actualTransaction.getApprovalCode());
+        assertEquals(expectedTransaction.getType(), actualTransaction.getType());
         assertNotNull(actualTransaction.getCreatedDate());
-        //TODO: Assert Type here!
     }
 }
