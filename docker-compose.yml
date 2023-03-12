@@ -3,7 +3,7 @@ version: '3.8'
 services:
   simplebanking:
     container_name: simplebanking
-    build: .
+    image: 173201162101/simplebanking
     ports:
       - "8080:8080"
     environment:

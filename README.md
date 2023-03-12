@@ -18,37 +18,20 @@
 ---
 
 ## How to Run Application
+
 **1 - Run With Docker Compose**<br>
-In the base path run this command:
-```
-mvn clean install
-```
-```
-docker compose up
-```
-In this way, application work with h2 Database<br>
-If you want to connect another database;<br>Open docker-compose file in the base path and activate the commented line (JAVA_OPTS).
+* If you want to connect H2 Database; run `docker compose up` in the base path
+* If you want to connect another database; open docker-compose file in the base path and activate the commented line (JAVA_OPTS). Then run `docker compose up` in the base path
 
 
-**2 - Run With IDE**<br>
-You can set the active profile to "h2", so application works with h2 Database<br>
-If you want to connect another database; you can change DATASOURCE_URL, DATASOURCE_USERNAME, DATASOURCE_PASSWORD and DATASOURCE_DRIVER_CLASS_NAME arguments in application.yml.
-You can pass this parameters as program arguments too. 
+**2 - Run With IDE or other tools (maven, java -jar)**<br>
+* If you want to connect H2 Database; pass argument: `spring.profiles.active=h2` <br>
+* If you want to connect another database; Pass arguments:<br>
+`DATASOURCE_URL={DATASOURCE_URL}`<br>
+`DATASOURCE_USERNAME={DATASOURCE_USERNAME}`<br>
+`DATASOURCE_PASSWORD={DATASOURCE_PASSWORD}`<br>
+`DATASOURCE_DRIVER_CLASS_NAME={DATASOURCE_DRIVER_CLASS_NAME}`<br>
 
-**3 - Run with java -jar**
-```
-mvn clean install
-```
-
-```
-java -Dspring.profiles.active=h2 -jar ./target/simplebanking.jar
-```
-In this way, application work with h2 Database<br>
-If you want to connect another database:
-```
-java -DDATASOURCE_URL={DATASOURCE_URL} -DDATASOURCE_USERNAME={DATASOURCE_USER} -DDATASOURCE_PASSWORD={PASSWORD} -DDATASOURCE_DRIVER_CLASS_NAME={DATASOURCE_DRIVER_CLASS_NAME} -jar ./target/simplebanking.jar
-```
-<br>
 
 **Note: The application tested with MySql and H2. So problems may occur with another databases.**
 
