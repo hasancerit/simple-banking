@@ -1,14 +1,11 @@
 version: '3.8'
 
 services:
-  mysql:
-    container_name: mysql-simplebanking
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
+  simplebanking:
+    container_name: simplebanking
+    build: .
     ports:
-      - '3307:3306'
-    volumes:
-      - ./src/main/resources/db/setup/:/docker-entrypoint-initdb.d/
+      - "8080:8080"
+    environment:
+      JAVA_OPTS: -Dspring.profiles.active=h2
+      #JAVA_OPTS: -DDATASOURCE_URL={DATASOURCE_URL} -DDATASOURCE_USERNAME={DATASOURCE_USER} -DDATASOURCE_PASSWORD={PASSWORD} -DDATASOURCE_DRIVER_CLASS_NAME={DATASOURCE_DRIVER_CLASS_NAME}
