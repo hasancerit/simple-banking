@@ -12,36 +12,36 @@ class BankAccountDepositTest {
 
     @Test
     void givenEmptyAccount_whenDeposit_thenIncreaseBalance() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
         bankAccount.deposit(Amount.of(100.0));
-        assertEquals(bankAccount.getBalance(), Amount.of(100.0));
+        assertEquals(Amount.of(100.0), bankAccount.getBalance());
     }
 
     @Test
     void givenEmptyAccount_whenDepositTwice_thenIncreaseBalance() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
         bankAccount.deposit(Amount.of(100.0));
-        assertEquals(bankAccount.getBalance(), Amount.of(100.0));
+        assertEquals(Amount.of(100.0), bankAccount.getBalance());
 
         bankAccount.deposit(Amount.of(53.0));
-        assertEquals(bankAccount.getBalance(), Amount.of(153.0));
+        assertEquals(Amount.of(153.0), bankAccount.getBalance());
     }
 
     @Test
     void givenEmptyAccount_whenDepositFloatingPoint_thenIncreaseBalance() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
         bankAccount.deposit(Amount.of(64.45));
-        assertEquals(bankAccount.getBalance(), Amount.of(64.45));
+        assertEquals(Amount.of(64.45), bankAccount.getBalance());
     }
 
     @Disabled("To fix this problem, BigDecimal should be used. I disable the test because it is requested in this way.")
     @Test
     void givenEmptyAccount_whenDepositFloatingPointTwice_thenIncreaseBalance() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
         bankAccount.deposit(Amount.of(30.10));
-        assertEquals(bankAccount.getBalance(), Amount.of(30.10));
+        assertEquals(Amount.of(30.10), bankAccount.getBalance());
 
         bankAccount.deposit(Amount.of(30.02));
-        assertEquals(bankAccount.getBalance(), Amount.of(60.03));
+        assertEquals(Amount.of(60.03), bankAccount.getBalance());
     }
 }

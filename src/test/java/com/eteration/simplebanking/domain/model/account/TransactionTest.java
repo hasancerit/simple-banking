@@ -17,7 +17,7 @@ class TransactionTest {
 
         depositTransaction.executeTransactionIn(bankAccount);
 
-        assertEquals(bankAccount.getBalance(), Amount.of(10.0));
+        assertEquals(Amount.of(10.0), bankAccount.getBalance());
         //assertEquals(bankAccount.getTransactions().size(), 1);
         //Transaction.makeChangesOnBankAccount function not taking the responsibility of add transaction to BankAccount.transactions
         //This responsibility belong BankAccount.Post
@@ -33,7 +33,7 @@ class TransactionTest {
 
         withdrawTransaction.executeTransactionIn(bankAccount);
 
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
         //assertEquals(bankAccount.getTransactions().size(), 1);
         //Transaction.makeChangesOnBankAccount function not taking the responsibility of add transaction to BankAccount.transactions
         //This responsibility belong BankAccount.Post

@@ -27,6 +27,7 @@ public abstract class Transaction {
     protected Amount amount;
 
     @Column(name = "TYPE")
+    @Enumerated(EnumType.STRING)
     protected TransactionType type;
 
     @Column(name = "APPROVAL_CODE")

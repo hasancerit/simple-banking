@@ -12,22 +12,22 @@ class BankAccountDepositAndWithdrawTest {
 
     @Test
     void givenEmptyAccount_whenDepositAndWithdraw_thenCalculateTheFinalAmount() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
         bankAccount.deposit(Amount.of(55.0));
-        assertEquals(bankAccount.getBalance(), Amount.of(55.0));
+        assertEquals(Amount.of(55.0), bankAccount.getBalance());
 
         bankAccount.withdraw(Amount.of(30.0));
-        assertEquals(bankAccount.getBalance(), Amount.of(25.0));
+        assertEquals(Amount.of(25.0), bankAccount.getBalance());
     }
 
     @Disabled("To fix this problem, BigDecimal should be used. I disable the test because it is requested in this way.")
     @Test
     void givenEmptyAccount_whenDepositAndWithdrawFloatingPoint_thenCalculateTheFinalAmount() {
-        assertEquals(bankAccount.getBalance(), Amount.ZERO);
+        assertEquals(Amount.ZERO, bankAccount.getBalance());
         bankAccount.deposit(Amount.of(40.20));
-        assertEquals(bankAccount.getBalance(), Amount.of(40.20));
+        assertEquals(Amount.of(40.20), bankAccount.getBalance());
 
         bankAccount.withdraw(Amount.of(10.02));
-        assertEquals(bankAccount.getBalance(), Amount.of(30.18));
+        assertEquals(Amount.of(30.18), bankAccount.getBalance());
     }
 }
