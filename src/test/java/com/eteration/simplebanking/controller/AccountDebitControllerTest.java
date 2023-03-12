@@ -64,12 +64,12 @@ class AccountDebitControllerTest {
     }
 
     @Test
-    void givenServiceThrowInsufficientBalanceAccountNumber_whenDebitApiCall_thenReturn406() throws Exception {
+    void givenServiceThrowInsufficientBalanceAccountNumber_whenDebitApiCall_thenReturn400() throws Exception {
         when(accountService.debit(accountNumber, transactionAmount)).thenThrow(new InsufficientBalanceException());
 
         final MockHttpServletResponse response = sendRequestDebit();
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_ACCEPTABLE.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     private MockHttpServletResponse sendRequestDebit() throws Exception {

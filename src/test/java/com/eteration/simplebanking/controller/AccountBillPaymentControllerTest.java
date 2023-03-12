@@ -67,13 +67,13 @@ class AccountBillPaymentControllerTest {
     }
 
     @Test
-    void givenServiceThrowInsufficientBalanceAccountNumber_whenBillPaymentApiCall_thenReturn406() throws Exception {
+    void givenServiceThrowInsufficientBalanceAccountNumber_whenBillPaymentApiCall_thenReturn400() throws Exception {
         when(accountService.billPayment(accountNumber, transactionAmount, billNumber, payee))
                 .thenThrow(new InsufficientBalanceException());
 
         final MockHttpServletResponse response = sendRequestBillPayment();
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_ACCEPTABLE.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     private MockHttpServletResponse sendRequestBillPayment() throws Exception {

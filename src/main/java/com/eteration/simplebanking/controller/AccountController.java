@@ -58,12 +58,12 @@ public class AccountController {
     }
 
     @ExceptionHandler(BankAccountNotFoundException.class)
-    public ResponseEntity<Void> handleBankAccountNotFoundException() {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<String> handleBankAccountNotFoundException() {
+        return new ResponseEntity<>("Not Found Account With Account Number", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InsufficientBalanceException.class)
-    public ResponseEntity<Void> handleInsufficientBalanceExceptionException() {
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE.value()).build();
+    public ResponseEntity<String> handleInsufficientBalanceExceptionException() {
+        return new ResponseEntity<>("Insufficient Balance", HttpStatus.BAD_REQUEST);
     }
 }
