@@ -1,4 +1,0 @@
-DATASOURCE_URL: jdbc:mysql://localhost:3307/simplebanking
-DATASOURCE_USERNAME: simplebanking
-DATASOURCE_PASSWORD: simplebankingpass
-DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
