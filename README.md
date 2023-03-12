@@ -36,14 +36,13 @@
 **Note: The application tested with MySql and H2. So problems may occur with another databases.**
 
 ---
-**Swagger UI**<br>
-&nbsp;&nbsp;&nbsp;&nbsp;http://localhost:8080/swagger-ui/index.html#/account-controller/credit
+**Swagger UI:** http://localhost:8080/swagger-ui/index.html#/account-controller/credit
 
-**H2 (If you use)**<br>
-&nbsp;&nbsp;&nbsp;&nbsp;http://localhost:8080/h2-console <br>
-&nbsp;&nbsp;&nbsp;&nbsp;**Username:** h2<br>
-&nbsp;&nbsp;&nbsp;&nbsp;**Password:** password<br>
-&nbsp;&nbsp;&nbsp;&nbsp;**JDBC URL:** jdbc:h2:mem:testdb<br>
+
+**H2 Console (If you use):** http://localhost:8080/h2-console
+- **Username:** h2<br>
+- **Password:** password<br>
+- **JDBC URL:** jdbc:h2:mem:testdb<br>
 <br><br>
 ---
 
