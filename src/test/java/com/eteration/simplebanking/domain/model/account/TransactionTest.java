@@ -1,4 +1,4 @@
-package com.eteration.simplebanking.domain.model.account.transaction;
+package com.eteration.simplebanking.domain.model.account;
 
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
