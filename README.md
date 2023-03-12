@@ -30,7 +30,7 @@ In this way, application work with h2 Database<br>
 If you want to connect another database;<br>Open docker-compose file in the base path and activate the commented line (JAVA_OPTS).
 
 
-**2 - Run With Docker IDE**<br>
+**2 - Run With IDE**<br>
 You can set the active profile to "h2", so application works with h2 Database<br>
 If you want to connect another database; you can change DATASOURCE_URL, DATASOURCE_USERNAME, DATASOURCE_PASSWORD and DATASOURCE_DRIVER_CLASS_NAME arguments in application.yml.
 You can pass this parameters as program arguments too. 
