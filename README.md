@@ -40,9 +40,10 @@
 
 
 **H2 Console (If you use):** http://localhost:8080/h2-console
-- **Username:** h2<br>
+- **Username:** sa<br>
 - **Password:** password<br>
 - **JDBC URL:** jdbc:h2:mem:testdb<br>
+- **Driver Class Name:** org.h2.Driver<br>
 <br><br>
 ---
 
