@@ -1,6 +1,7 @@
 package com.eteration.simplebanking.domain.model.account;
 
 import com.eteration.simplebanking.domain.model.Amount;
+import com.eteration.simplebanking.domain.model.account.transaction.BillPaymentTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
 import com.eteration.simplebanking.util.builder.BankAccountTestDataBuilder;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BankAccountPostTest {
     @Test
-    void givenEmptyAccount_whenDepositAndWithdrawPost_thenCalculateTheFinalAmount() {
+    void givenAccountWithoutTransaction_whenDepositAndWithdrawPost_thenCalculateTheFinalAmount() {
         final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         bankAccount.post(new DepositTransaction(Amount.of(55.0)));
@@ -23,7 +24,7 @@ class BankAccountPostTest {
     }
 
     @Test
-    void givenEmptyAccount_whenPostDeposit_thenIncreaseBalance() {
+    void givenAccountWithoutTransaction_whenPostDeposit_thenIncreaseBalance() {
         final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         bankAccount.post(new DepositTransaction(Amount.of(55.0)));
@@ -32,7 +33,7 @@ class BankAccountPostTest {
     }
 
     @Test
-    void givenEmptyAccount_whenPostDepositTwice_thenIncreaseBalance() {
+    void givenAccountWithoutTransaction_whenPostDepositTwice_thenIncreaseBalance() {
         final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         bankAccount.post(new DepositTransaction(Amount.of(55.0)));
@@ -45,7 +46,7 @@ class BankAccountPostTest {
     }
 
     @Test
-    void givenAccountWithHundredBalance_whenPostWithdraw_thenIncreaseBalance() {
+    void givenAccountAccountWithTransaction_whenPostWithdraw_thenIncreaseBalance() {
         final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(100.0)
         );
@@ -56,7 +57,7 @@ class BankAccountPostTest {
     }
 
     @Test
-    void givenAccountWithHundredBalance_whenPostWithdrawTwice_thenIncreaseBalance() {
+    void givenAccountAccountWithTransaction_whenPostWithdrawTwice_thenIncreaseBalance() {
         final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(100.0)
         );
@@ -68,5 +69,19 @@ class BankAccountPostTest {
         bankAccount.post(new WithdrawTransaction(Amount.of(33.50)));
         assertEquals(Amount.of(36.50), bankAccount.getBalance());
         assertEquals(2, bankAccount.getTransactions().size());
+    }
+
+    @Test
+    void givenAccountWithTransaction_whenPostDepositWithdrawAndBillPayment_thenCalculateBalance() {
+        final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
+                Amount.of(100.0)
+        );
+
+        bankAccount.post(new DepositTransaction(Amount.of(60.0)));
+        bankAccount.post(new WithdrawTransaction(Amount.of(15.0)));
+        bankAccount.post(new BillPaymentTransaction(Amount.of(30.0), "1234", "Vodafone"));
+
+        assertEquals(Amount.of(115.0), bankAccount.getBalance());
+        assertEquals(3, bankAccount.getTransactions().size());
     }
 }
