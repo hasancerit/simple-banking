@@ -22,7 +22,7 @@ class BankAccountDepositAndWithdrawTest {
     }
 
     @Test
-    void givenAccountWithTransaction_whenWithdrawTwice_thenSubtractBalance() {
+    void givenAccountWithTransaction_whenWithdraw_thenSubtractBalance() {
         final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(100.0)
         );

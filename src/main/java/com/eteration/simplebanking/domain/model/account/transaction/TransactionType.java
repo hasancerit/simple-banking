@@ -2,5 +2,6 @@ package com.eteration.simplebanking.domain.model.account.transaction;
 
 public enum TransactionType {
     WITHDRAWAL,
-    DEPOSIT
+    DEPOSIT,
+    BILL_PAYMENT
 }
