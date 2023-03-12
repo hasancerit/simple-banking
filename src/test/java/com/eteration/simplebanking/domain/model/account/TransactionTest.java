@@ -1,12 +1,10 @@
 package com.eteration.simplebanking.domain.model.account;
 
 import com.eteration.simplebanking.domain.model.Amount;
-import com.eteration.simplebanking.domain.model.account.BankAccount;
-import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.domain.model.account.transaction.BillPaymentTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;
 import com.eteration.simplebanking.domain.model.account.transaction.WithdrawTransaction;
-import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
+import com.eteration.simplebanking.util.builder.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -5,7 +5,7 @@ import com.eteration.simplebanking.controller.dto.response.TransactionResultResp
 import com.eteration.simplebanking.domain.exception.InsufficientBalanceException;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
-import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
+import com.eteration.simplebanking.util.builder.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

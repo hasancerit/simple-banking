@@ -1,4 +1,4 @@
-package com.eteration.simplebanking.util;
+package com.eteration.simplebanking.util.builder;
 
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.transaction.DepositTransaction;

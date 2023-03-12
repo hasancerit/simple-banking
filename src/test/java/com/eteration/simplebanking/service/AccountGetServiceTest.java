@@ -5,7 +5,7 @@ import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.repository.BankAccountRepository;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import com.eteration.simplebanking.service.impl.AccountServiceImp;
-import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
+import com.eteration.simplebanking.util.builder.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -2,7 +2,7 @@ package com.eteration.simplebanking.domain.model.account;
 
 import com.eteration.simplebanking.domain.exception.InsufficientBalanceException;
 import com.eteration.simplebanking.domain.model.Amount;
-import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
+import com.eteration.simplebanking.util.builder.BankAccountTestDataBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
