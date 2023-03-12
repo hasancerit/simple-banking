@@ -1,11 +1,14 @@
 package com.eteration.simplebanking.controller;
 
 import com.eteration.simplebanking.controller.dto.res.BankAccountResponse;
+import com.eteration.simplebanking.controller.dto.res.TransactionResponse;
 import com.eteration.simplebanking.domain.model.Amount;
 import com.eteration.simplebanking.domain.model.account.BankAccount;
+import com.eteration.simplebanking.domain.model.account.Transaction;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
+import com.eteration.simplebanking.util.CopyObjectUtil;
 import com.eteration.simplebanking.util.TransactionTestDataBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static com.eteration.simplebanking.util.ObjectMapperUtil.fromJsonString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,41 +37,59 @@ class AccountGetControllerTest {
     private AccountService accountService;
 
     @Test
-    void givenExistedAccountNumber_whenGetAccountApiCall_thenReturnAccountResponse() throws Exception {
-        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
+    void givenServiceReturnAnBankAccount_whenGetApiCall_thenDoesntChangeItAndReturnAsAccountResponse() throws Exception {
+        final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(10.0),
                 TransactionTestDataBuilder.approvedAndPersistedDepositTransaction(Amount.of(10.0))
         );
 
         when(accountService.get(bankAccount.getAccountNumber().value()))
-                .thenReturn(bankAccount);
+                .thenReturn(CopyObjectUtil.deepCopy(bankAccount, BankAccount.class));
 
-        MockHttpServletResponse response = mockMvc.perform(
-                get("/account/v1/" + bankAccount.getAccountNumber().value()).accept(MediaType.APPLICATION_JSON)
-        ).andReturn().getResponse();
+        final MockHttpServletResponse response = sendRequestGetAccount(bankAccount.getAccountNumber().value());
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertNotNull(response.getContentAsString());
 
-        final BankAccountResponse bankAccountResponseFromApi = fromJsonString(response.getContentAsString(), BankAccountResponse.class);
-        assertEquals(bankAccount.getAccountNumber().value(), bankAccountResponseFromApi.accountNumber());
-        assertEquals(bankAccount.getBalance().value(), bankAccountResponseFromApi.balance());
-        assertEquals(bankAccount.getOwner(), bankAccountResponseFromApi.owner());
-        assertEquals(bankAccount.getCreatedDate(), bankAccountResponseFromApi.createdDate());
-        assertEquals(bankAccount.getTransactions().size(), bankAccountResponseFromApi.transactions().size());
-        assertEquals(bankAccount.getTransactions().get(0).getAmount().value(), bankAccountResponseFromApi.transactions().get(0).amount());
-        assertNotNull(bankAccountResponseFromApi.transactions().get(0).createdDate());
-        assertNotNull(bankAccount.getTransactions().get(0).getApprovalCode(), bankAccountResponseFromApi.transactions().get(0).approvalCode());
+        final BankAccountResponse accountResponse =
+                fromJsonString(response.getContentAsString(), BankAccountResponse.class);
+        assertEquals(bankAccount.getAccountNumber().value(), accountResponse.accountNumber());
+        assertEquals(bankAccount.getOwner(), accountResponse.owner());
+        assertEquals(bankAccount.getBalance().value(), accountResponse.balance());
+        assertEquals(bankAccount.getCreatedDate(), accountResponse.createdDate());
+
+        final List<TransactionResponse> transactionResponsesOfAccountResponse = accountResponse.transactions();
+        assertEquals(bankAccount.getTransactions().size(), transactionResponsesOfAccountResponse.size());
+        this.assertTransactionResponseOfAccountResponse(
+                bankAccount.getTransactions().get(0),
+                transactionResponsesOfAccountResponse.get(0)
+        );
+    }
+
+    private void assertTransactionResponseOfAccountResponse(Transaction expectedTransaction,
+                                                            TransactionResponse actualTransactionResponse) {
+        assertEquals(expectedTransaction.getAmount().value(), actualTransactionResponse.amount());
+        assertEquals(expectedTransaction.getType(), actualTransactionResponse.type());
+        assertNotNull(expectedTransaction.getApprovalCode(), actualTransactionResponse.approvalCode());
+        assertNotNull(actualTransactionResponse.createdDate());
     }
 
     @Test
-    void givenNotExistAccountNumber_whenGetAccountApiCall_thenReturn404() throws Exception {
-        String notExistAccountNumber = "111-2222";
-        when(accountService.get(notExistAccountNumber)).thenThrow(new BankAccountNotFoundException(notExistAccountNumber));
+    void givenServiceThrowBankAccountNotFoundException_whenGetApiCall_thenReturn404() throws Exception {
+        final String notExistAccountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
 
-        MockHttpServletResponse response = mockMvc.perform(
-                get("/account/v1/" + notExistAccountNumber).accept(MediaType.APPLICATION_JSON)
-        ).andReturn().getResponse();
+        when(accountService.get(notExistAccountNumber))
+                .thenThrow(new BankAccountNotFoundException(notExistAccountNumber));
+
+        final MockHttpServletResponse response = sendRequestGetAccount(notExistAccountNumber);
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+
+    private MockHttpServletResponse sendRequestGetAccount(String accountNumber) throws Exception {
+        return mockMvc.perform(
+                get("/account/v1/%s".formatted(accountNumber))
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andReturn().getResponse();
     }
 }

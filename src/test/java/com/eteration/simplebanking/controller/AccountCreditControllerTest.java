@@ -2,7 +2,6 @@ package com.eteration.simplebanking.controller;
 
 import com.eteration.simplebanking.controller.dto.req.TransactionRequest;
 import com.eteration.simplebanking.controller.dto.res.TransactionResultResponse;
-import com.eteration.simplebanking.domain.model.account.BankAccount;
 import com.eteration.simplebanking.service.AccountService;
 import com.eteration.simplebanking.service.exception.BankAccountNotFoundException;
 import com.eteration.simplebanking.util.BankAccountTestDataBuilder;
@@ -34,45 +33,44 @@ class AccountCreditControllerTest {
     private AccountService accountService;
 
     @Test
-    void givenExistedAccountNumber_whenCreditAccountApiCall_thenReturnApprovalCode() throws Exception {
+    void givenServiceReturnApprovalCode_whenCreditApiCall_thenReturnApprovalCode() throws Exception {
+        final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
         final Double transactionAmount = 10.0;
-        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
         final String approvalCodeFromService = UUID.randomUUID().toString();
-        when(accountService.credit(bankAccount.getAccountNumber().value(), transactionAmount))
-                .thenReturn(approvalCodeFromService);
+        when(accountService.credit(accountNumber, transactionAmount)).thenReturn(approvalCodeFromService);
 
-        TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
-
-        MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/"+ bankAccount.getAccountNumber().value() + "/credit")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJsonString(transactionRequest))
-        ).andReturn().getResponse();
+        final MockHttpServletResponse response = sendRequestCredit(accountNumber, transactionAmount);
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertNotNull(response.getContentAsString());
-        System.out.println(response.getContentAsString());
 
-        final TransactionResultResponse transactionResultResponse = fromJsonString(response.getContentAsString(), TransactionResultResponse.class);
+        final TransactionResultResponse transactionResultResponse =
+                fromJsonString(response.getContentAsString(), TransactionResultResponse.class);
         assertEquals(approvalCodeFromService, transactionResultResponse.approvalCode());
         assertEquals(HttpStatus.OK, transactionResultResponse.status());
     }
 
     @Test
-    void givenNotExistAccountNumber_whenCreditAccountApiCall_thenReturn404() throws Exception {
+    void givenServiceThrowBankAccountNotFoundException_whenCreditApiCall_thenReturn404() throws Exception {
+        final String accountNumber = BankAccountTestDataBuilder.generateValidAccountNumber();
         final Double transactionAmount = 10.0;
-        String notExistAccountNumber = "111-2222";
-        when(accountService.credit(notExistAccountNumber,transactionAmount )).thenThrow(new BankAccountNotFoundException(notExistAccountNumber));
 
-        TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
+        when(accountService.credit(accountNumber, transactionAmount))
+                .thenThrow(new BankAccountNotFoundException(accountNumber));
 
-        MockHttpServletResponse response = mockMvc.perform(
-                post("/account/v1/"+ notExistAccountNumber + "/credit")
+        final MockHttpServletResponse response = sendRequestCredit(accountNumber, transactionAmount);
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    private MockHttpServletResponse sendRequestCredit(String accountNumber, Double transactionAmount) throws Exception {
+        final TransactionRequest transactionRequest = new TransactionRequest(transactionAmount);
+
+        return mockMvc.perform(
+                post("/account/v1/%s/credit".formatted(accountNumber))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJsonString(transactionRequest))
         ).andReturn().getResponse();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 }

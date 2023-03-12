@@ -2,7 +2,10 @@ package com.eteration.simplebanking.util;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EntityManagerUtil {
     public static <T> void persistAndFlush(EntityManager entityManager, T bankAccount) {
         entityManager.clear();

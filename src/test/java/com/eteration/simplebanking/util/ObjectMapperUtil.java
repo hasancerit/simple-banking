@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ObjectMapperUtil {
     public static <T> T fromJsonString(String json, Class<T> tClass) throws IOException {
         ObjectMapper mapper = new ObjectMapper();

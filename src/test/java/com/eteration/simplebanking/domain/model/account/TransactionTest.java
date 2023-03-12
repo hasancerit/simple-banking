@@ -11,31 +11,32 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TransactionTest {
     @Test
     void givenAnAccountToDepositTransaction_whenExecuteTransaction_thenIncreaseBalanceOfAccount() {
-        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
+        final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithoutTransaction();
 
-        Transaction depositTransaction = new DepositTransaction(Amount.of(10.0));
+        final Transaction depositTransaction = new DepositTransaction(Amount.of(10.0));
 
         depositTransaction.executeTransactionIn(bankAccount);
 
         assertEquals(Amount.of(10.0), bankAccount.getBalance());
-        //assertEquals(bankAccount.getTransactions().size(), 1);
-        //Transaction.makeChangesOnBankAccount function not taking the responsibility of add transaction to BankAccount.transactions
-        //This responsibility belong BankAccount.Post
+        assertEquals(bankAccount.getTransactions().size(), 0);
+        //DepositTransaction.makeChangesOnBankAccount function not taking the responsibility of add transaction to BankAccount.transactions
+        //May be better pattern could be implemented for consistency
     }
 
     @Test
     void givenAnAccountToWithdrawalTransaction_whenExecuteTransaction_thenReduceBalanceOfAccount() {
-        BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
+        final BankAccount bankAccount = BankAccountTestDataBuilder.bankAccountWithTransaction(
                 Amount.of(20.0)
         );
 
-        Transaction withdrawTransaction = new WithdrawTransaction(Amount.of(20.0));
+        final Transaction withdrawTransaction = new WithdrawTransaction(Amount.of(20.0));
 
         withdrawTransaction.executeTransactionIn(bankAccount);
 
         assertEquals(Amount.ZERO, bankAccount.getBalance());
-        //assertEquals(bankAccount.getTransactions().size(), 1);
-        //Transaction.makeChangesOnBankAccount function not taking the responsibility of add transaction to BankAccount.transactions
+        assertEquals(bankAccount.getTransactions().size(), 0);
+        //WithdrawalTransaction_.makeChangesOnBankAccount function not taking the responsibility of add transaction to BankAccount.transactions
         //This responsibility belong BankAccount.Post
+        //May be better pattern could be implemented for consistency
     }
 }
