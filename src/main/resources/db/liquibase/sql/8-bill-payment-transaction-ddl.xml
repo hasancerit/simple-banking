@@ -16,11 +16,11 @@
                 />
             </column>
 
-            <column name="BILL_NUMBER" type="VARCHAR(100)">
+            <column name="BILL_NUMBER" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="PAYEE" type="VARCHAR(100)">
+            <column name="PAYEE" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
         </createTable>

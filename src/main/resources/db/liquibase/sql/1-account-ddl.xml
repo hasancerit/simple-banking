@@ -7,7 +7,7 @@
 
     <changeSet author="simplebanking" id="1">
         <createTable tableName="BANK_ACCOUNT">
-            <column name="ACCOUNT_NUMBER" type="VARCHAR(255)">
+            <column name="ACCOUNT_NUMBER" type="VARCHAR(8)">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
             <column name="BALANCE" type="DOUBLE" defaultValue="0.0">

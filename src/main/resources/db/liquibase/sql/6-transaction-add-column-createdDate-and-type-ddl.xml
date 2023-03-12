@@ -7,7 +7,7 @@
 
     <changeSet author="simplebanking" id="6">
         <addColumn tableName="TRANSACTION">
-            <column name="TYPE" type="VARCHAR(255)" defaultValue="Deposit">
+            <column name="TYPE" type="VARCHAR(30)" defaultValue="Deposit">
                 <constraints nullable="false" checkConstraint="CHECK IN('DEPOSIT','WITHDRAWAL')"/>
             </column>
 

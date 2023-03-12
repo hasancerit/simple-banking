@@ -13,7 +13,7 @@
             <column name="AMOUNT" type="DOUBLE">
                 <constraints nullable="false"/>
             </column>
-            <column name="BANK_ACCOUNT_NUMBER" type="VARCHAR(255)">
+            <column name="BANK_ACCOUNT_NUMBER" type="VARCHAR(8)">
                 <constraints nullable="true"
                              foreignKeyName="FK_TRANSACTION_TO_BANK_ACCOUNT"
                              references="BANK_ACCOUNT(ACCOUNT_NUMBER)"/>
