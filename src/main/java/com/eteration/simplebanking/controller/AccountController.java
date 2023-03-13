@@ -14,11 +14,13 @@ import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/account/v1")
 @RequiredArgsConstructor
+@Validated
 public class AccountController {
     private final AccountService accountService;
 
