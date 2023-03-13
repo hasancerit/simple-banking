@@ -21,7 +21,7 @@
 
 **1 - Run With Docker Compose**<br>
 * If you want to connect H2 Database; run `docker compose up` in the base path
-* If you want to connect another database; open docker-compose file in the base path and activate the commented line (JAVA_OPTS). Then run `docker compose up` in the base path
+* If you want to connect another database; open docker-compose file in the base path and activate the commented lines. Then run `docker compose up` in the base path
 
 
 **2 - Run With IDE or other tools (maven, java -jar)**<br>
